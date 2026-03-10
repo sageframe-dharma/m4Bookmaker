@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>m4Bookmaker — Audiobook Builder for Mac</title>
+  <meta name="description" content="Turn a folder of audio files into a clean .m4b audiobook in seconds. Automatic chapters, cover art, audio repair, and a built-in preview player. Free on GitHub." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="m4Bookmaker — Audiobook Builder for Mac" />
+  <meta property="og:description" content="Turn a folder of audio files into a clean .m4b audiobook in seconds. Automatic chapters, cover art, audio repair, and a built-in preview player." />
+  <meta property="og:image" content="https://m4bmaker.com/assets/icons/app-icon.png" />
+  <meta property="og:url" content="https://m4bmaker.com" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/favicon-192.png" />
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Design tokens ─────────────────────────────────────── */
+    :root {
+      --ink:         #1a1a1a;
+      --ink-light:   #4a4a4a;
+      --ink-muted:   #7a7a7a;
+      --ground:      #f5f2ed;
+      --ground-warm: #ebe6dd;
+      --white:       #faf8f4;
+      --accent:      #c45a2d;
+      --accent-dark: #a8481f;
+      --rule:        #d0c9be;
+      --dark-bg:     #1a1a1a;
+      --dark-text:   #c8c2b8;
+      --dark-prose:  #b0a99e;
+      --dark-muted:  #888888;
+      --dark-rule:   #333333;
+      --dark-em:     #f5f2ed;
+    }
+
+    /* ── Reset ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--ground);
+      color: var(--ink);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { display: block; max-width: 100%; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Layout helpers ────────────────────────────────────── */
+    .container {
+      width: min(1100px, 100% - 3rem);
+      margin-inline: auto;
+    }
+    .container--narrow {
+      width: min(760px, 100% - 3rem);
+      margin-inline: auto;
+    }
+
+    /* ── Typography ────────────────────────────────────────── */
+    .serif { font-family: 'Lora', Georgia, serif; }
+
+    h1, h2, h3 { font-family: 'Lora', Georgia, serif; line-height: 1.2; }
+
+    .label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+    }
+
+    /* ── Nav ───────────────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(245,242,237,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--rule);
+      padding: 0.9rem 0;
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: 'Lora', Georgia, serif;
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .nav-brand:hover { text-decoration: none; }
+    .nav-brand img { width: 72px; height: 72px; border-radius: 16px; }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1.1rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s, opacity 0.15s;
+      text-decoration: none;
+    }
+    .btn:hover { text-decoration: none; }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover { background: var(--accent-dark); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--ink-light);
+      border: 1px solid var(--rule);
+    }
+    .btn-ghost:hover { background: var(--ground-warm); }
+
+    /* ── Hero ──────────────────────────────────────────────── */
+    .hero {
+      padding: 5rem 0 0;
+      text-align: center;
+      overflow: hidden;
+    }
+    .hero-eyebrow {
+      margin-bottom: 1.2rem;
+    }
+    .hero h1 {
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 1.2rem;
+      max-width: 800px;
+      margin-inline: auto;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .hero-sub {
+      font-size: 1.15rem;
+      color: var(--ink-light);
+      max-width: 560px;
+      margin: 0 auto 2.2rem;
+      line-height: 1.7;
+    }
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.9rem;
+    }
+    .btn-appstore {
+      background: var(--ink);
+      color: #fff;
+      padding: 0.65rem 1.4rem;
+      font-size: 0.9rem;
+      border-radius: 8px;
+    }
+    .btn-appstore:hover { background: #111; }
+    .btn-appstore .price-tag {
+      background: rgba(255,255,255,0.15);
+      border-radius: 4px;
+      padding: 0.1rem 0.4rem;
+      font-size: 0.78rem;
+      margin-left: 0.2rem;
+    }
+    .hero-note {
+      font-size: 0.8rem;
+      color: var(--ink-muted);
+    }
+    .hero-note a { color: var(--accent); }
+    .platform-soon {
+      margin-top: 0.5rem;
+      font-size: 0.78rem;
+      color: var(--ink-muted);
+      opacity: 0.65;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .platform-soon svg { flex-shrink: 0; }
+
+    /* Hero screenshot */
+    .hero-screenshot {
+      margin-top: 3.5rem;
+      position: relative;
+    }
+    .hero-screenshot-wrap {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      align-items: flex-end;
+    }
+    .screenshot-main {
+      width: min(480px, 88vw);
+      border-radius: 14px;
+      box-shadow: 0 32px 80px rgba(26,26,26,0.18), 0 8px 24px rgba(26,26,26,0.1);
+    }
+    .screenshot-side {
+      width: min(220px, 40vw);
+      border-radius: 10px;
+      box-shadow: 0 16px 40px rgba(26,26,26,0.14);
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+
+    /* ── Badges strip ──────────────────────────────────────── */
+    .badges {
+      padding: 2.5rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .badges-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+    }
+    .badge-item {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      color: var(--ink-muted);
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+    .badge-icon {
+      width: 20px;
+      height: 20px;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    /* ── Section base ──────────────────────────────────────── */
+    section { padding: 5rem 0; }
+    .section-header {
+      margin-bottom: 3rem;
+    }
+    .section-header h2 {
+      font-size: clamp(1.7rem, 3vw, 2.4rem);
+      margin-top: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .section-header p {
+      color: var(--ink-light);
+      font-size: 1.05rem;
+      max-width: 540px;
+      line-height: 1.7;
+    }
+
+    /* ── Feature tabs screenshot ───────────────────────────── */
+    .tabs-section {
+      background: var(--white);
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      padding: 4rem 0;
+    }
+    .tabs-img {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid var(--rule);
+      box-shadow: 0 4px 20px rgba(26,26,26,0.08);
+    }
+    .tabs-caption {
+      margin-top: 1rem;
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--ink-muted);
+    }
+
+    /* ── Feature grid ──────────────────────────────────────── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+      background: transparent;
+    }
+    .feature-card {
+      background: var(--white);
+      padding: 2rem;
+      border-radius: 12px;
+      border: 1px solid var(--rule);
+    }
+    .feature-icon {
+      font-size: 1.6rem;
+      margin-bottom: 0.8rem;
+      line-height: 1;
+    }
+    .feature-card h3 {
+      font-family: 'Lora', Georgia, serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--ink);
+    }
+    .feature-card p {
+      font-size: 0.88rem;
+      color: var(--ink-light);
+      line-height: 1.6;
+    }
+    .feature-card .accent-tag {
+      display: inline-block;
+      margin-top: 0.75rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    /* ── Screenshot feature rows ───────────────────────────── */
+    .feature-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      padding: 4rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .feature-row:last-child { border-bottom: none; }
+    .feature-row.reverse .feature-row-text { order: 2; }
+    .feature-row.reverse .feature-row-img  { order: 1; }
+    .feature-row-text h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.85rem;
+    }
+    .feature-row-text p {
+      color: var(--ink-light);
+      font-size: 0.95rem;
+      line-height: 1.75;
+      margin-bottom: 0.75rem;
+    }
+    .feature-row-text ul {
+      margin: 0.75rem 0 0 1.1rem;
+      color: var(--ink-light);
+      font-size: 0.9rem;
+      line-height: 1.8;
+    }
+    .feature-row-img img {
+      border-radius: 12px;
+      box-shadow: 0 16px 48px rgba(26,26,26,0.14);
+      width: 100%;
+    }
+
+    /* ── Dark section (repair/preflight) ───────────────────── */
+    .dark-section {
+      background: var(--dark-bg);
+      color: var(--dark-text);
+      padding: 5rem 0;
+    }
+    .dark-section .label { color: var(--dark-muted); }
+    .dark-section h2 { color: var(--dark-em); }
+    .dark-section .section-header p { color: var(--dark-prose); }
+    .mess-list {
+      list-style: none;
+      margin-top: 2.5rem;
+      border-top: 1px solid var(--dark-rule);
+    }
+    .mess-list li {
+      display: flex;
+      gap: 1.25rem;
+      align-items: baseline;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid var(--dark-rule);
+    }
+    .mess-list .mi {
+      font-size: 1.2rem;
+      flex-shrink: 0;
+      width: 1.75rem;
+      line-height: 1.4;
+    }
+    .mess-list strong {
+      color: var(--dark-em);
+      font-size: 0.95rem;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+    .mess-list span {
+      font-size: 0.88rem;
+      color: var(--dark-prose);
+      line-height: 1.6;
+    }
+
+    /* ── Queue screenshot ──────────────────────────────────── */
+    .queue-section {
+      background: var(--ground-warm);
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      padding: 5rem 0;
+    }
+    .queue-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .queue-layout img {
+      border-radius: 12px;
+      box-shadow: 0 16px 48px rgba(26,26,26,0.12);
+      width: 100%;
+    }
+    .queue-text h2 { font-size: 1.8rem; margin-top: 0.5rem; margin-bottom: 1rem; }
+    .queue-text p { color: var(--ink-light); font-size: 0.95rem; line-height: 1.75; margin-bottom: 0.75rem; }
+    .queue-list {
+      margin: 1rem 0 0 1.1rem;
+      color: var(--ink-light);
+      font-size: 0.9rem;
+      line-height: 1.85;
+    }
+
+    /* ── Open source / pricing ─────────────────────────────── */
+    .pricing {
+      padding: 5rem 0;
+    }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .pricing-card {
+      border-radius: 14px;
+      padding: 2.5rem;
+    }
+    .pricing-card--free {
+      background: var(--white);
+      border: 1px solid var(--rule);
+    }
+    .pricing-card--paid {
+      background: var(--ink);
+      color: var(--dark-text);
+    }
+    .pricing-card--paid h3 { color: var(--dark-em); }
+    .pricing-card--paid p  { color: var(--dark-prose); }
+    .pricing-card--paid .price-amount { color: #fff; }
+    .pricing-card--paid hr { border-color: var(--dark-rule); }
+    .pricing-card h3 {
+      font-family: 'Lora', Georgia, serif;
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+    .price-amount {
+      font-size: 2.6rem;
+      font-family: 'Lora', Georgia, serif;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 0.75rem 0;
+      line-height: 1;
+    }
+    .price-amount sup {
+      font-size: 1.1rem;
+      vertical-align: super;
+    }
+    .pricing-card hr { border: none; border-top: 1px solid var(--rule); margin: 1.25rem 0; }
+    .pricing-card p { font-size: 0.9rem; color: var(--ink-light); line-height: 1.65; margin-bottom: 0.6rem; }
+    .pricing-card .btn { margin-top: 1.25rem; width: 100%; justify-content: center; }
+    .pricing-features {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .pricing-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      font-size: 0.88rem;
+      color: var(--ink-light);
+      padding: 0.3rem 0;
+    }
+    .pricing-card--paid .pricing-features li { color: var(--dark-prose); }
+    .pricing-features li::before {
+      content: "✓";
+      color: var(--accent);
+      font-weight: 600;
+      flex-shrink: 0;
+      margin-top: 0.05rem;
+    }
+
+    /* ── CLI section ───────────────────────────────────────── */
+    .cli-section {
+      background: var(--white);
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      padding: 4rem 0;
+    }
+    .cli-block {
+      background: var(--dark-bg);
+      border-radius: 10px;
+      padding: 1.75rem 2rem;
+      margin-top: 1.5rem;
+      overflow-x: auto;
+    }
+    .cli-block pre {
+      font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+      font-size: 0.88rem;
+      color: var(--dark-text);
+      line-height: 1.7;
+      white-space: pre;
+    }
+    .cli-block .prompt { color: var(--dark-muted); }
+    .cli-block .flag   { color: #b0c4de; }
+    .cli-block .value  { color: #c8c2b8; }
+    .cli-block .comment { color: var(--dark-muted); font-style: italic; }
+
+    /* ── Footer ────────────────────────────────────────────── */
+    footer {
+      padding: 3rem 0;
+      border-top: 1px solid var(--rule);
+    }
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Lora', Georgia, serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .footer-brand img { width: 24px; height: 24px; }
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+    }
+    .footer-links a:hover { color: var(--accent); text-decoration: none; }
+    .footer-copy {
+      font-size: 0.8rem;
+      color: var(--ink-muted);
+    }
+
+    /* ── Responsive ────────────────────────────────────────── */
+    @media (max-width: 700px) {
+      .hero-screenshot-wrap { flex-direction: column; align-items: center; }
+      .screenshot-side { display: none; }
+      .feature-row { grid-template-columns: 1fr; gap: 2rem; }
+      .feature-row.reverse .feature-row-text { order: 1; }
+      .feature-row.reverse .feature-row-img  { order: 2; }
+      .queue-layout { grid-template-columns: 1fr; gap: 2rem; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+      .nav-links .btn-ghost { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Nav ─────────────────────────────────────────────────── -->
+<nav>
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#" class="nav-brand">
+        <img src="assets/icons/app-icon.png" alt="m4bmaker icon" />
+        m4bmaker
+      </a>
+      <div class="nav-links">
+        <a href="https://github.com/sageframe-no-kaji/m4bmaker" class="btn btn-ghost" target="_blank" rel="noopener">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.111-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.578.688.48C19.138 20.163 22 16.417 22 12c0-5.523-4.477-10-10-10z"/></svg>
+          GitHub — Free
+        </a>
+        <a href="#pricing" class="btn btn-primary">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          Buy — $4.99
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ── Hero ────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-eyebrow label">Audiobook Builder for macOS</div>
+    <h1>Your folder of MP3s becomes<br/><em>a beautiful audiobook</em> in seconds.</h1>
+    <p class="hero-sub">
+      Drag in a folder, adjust your chapters, hit Convert.
+      m4Bmaker handles the rest — chapters, cover art, metadata,
+      and even repairs broken audio files automatically.
+    </p>
+    <div class="hero-actions">
+      <a href="#pricing" class="btn btn-primary">
+        Buy — $4.99
+      </a>
+      <a href="https://github.com/sageframe-no-kaji/m4bmaker" class="btn btn-ghost" target="_blank" rel="noopener">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.111-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.578.688.48C19.138 20.163 22 16.417 22 12c0-5.523-4.477-10-10-10z"/></svg>
+        Free on GitHub (GPL-3.0)
+      </a>
+    </div>
+    <p class="hero-note">macOS · <a href="https://github.com/sageframe-no-kaji/m4bmaker" target="_blank">open source on GitHub</a> · direct purchase supports development</p>
+    <p class="platform-soon">
+      <!-- Linux Tux -->
+      <svg width="14" height="14" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16 2C9.925 2 5 7.589 5 14.5c0 2.94.91 5.666 2.438 7.875C8.602 24.2 9.5 25.9 9.5 27.5v.5h3v-.5c0-1.1.45-2.15 1.1-2.9.65-.75 1.4-1.1 2.4-1.1s1.75.35 2.4 1.1c.65.75 1.1 1.8 1.1 2.9v.5h3v-.5c0-1.6.898-3.3 2.062-5.125A13.42 13.42 0 0 0 27 14.5C27 7.589 22.075 2 16 2zm-3 16a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm6 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/></svg>
+      Linux
+      &nbsp;·&nbsp;
+      <!-- Windows -->
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
+      Windows
+      &nbsp;— coming soon
+    </p>
+  </div>
+
+  <div class="hero-screenshot">
+    <div class="hero-screenshot-wrap">
+      <img
+        src="assets/img/convert.png"
+        alt="m4bmaker convert view — build an audiobook from a folder of MP3s"
+        class="screenshot-main"
+      />
+      <img
+        src="assets/img/chapter-edit-split.png"
+        alt="m4bmaker chapter editor"
+        class="screenshot-side"
+      />
+    </div>
+  </div>
+</section>
+
+
+<!-- ── Badges strip ─────────────────────────────────────────── -->
+<div class="badges">
+  <div class="container">
+    <div class="badges-inner">
+      <div class="badge-item">
+        <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        Free &amp; open source on GitHub
+      </div>
+      <div class="badge-item">
+        <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        ffmpeg powered · no cloud
+      </div>
+      <div class="badge-item">
+        <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Repairs broken audio automatically
+      </div>
+      <div class="badge-item">
+        <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+        Built-in audio preview player
+      </div>
+      <div class="badge-item">
+        <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+        Batch queue for collections
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ── Feature rows ─────────────────────────────────────────── -->
+<section>
+  <div class="container">
+    <div class="section-header">
+      <div class="label">What makes it different</div>
+      <h2>Designed for how audiobooks are actually built.</h2>
+      <p>Most audiobook tools expect perfect input. m4bmaker is built around the reality of audiobook downloads — messy files, inconsistent formats, and titles that need editing.</p>
+    </div>
+
+    <!-- Joining and building -->
+    <div class="feature-row">
+      <div class="feature-row-text">
+        <h3>Join a folder of files into a single clean audiobook</h3>
+        <p>
+          Drop any folder of audio files — MP3, M4A, AAC, FLAC, WAV, and more.
+          File names become chapter titles automatically, track number prefixes
+          are stripped, and everything is sorted and joined in order.
+        </p>
+        <p>
+          Set the title, author, narrator, and cover art. m4bmaker writes proper
+          iTunes-compatible metadata so the audiobook shows up correctly in
+          Books, Overcast, Audiobookshelf, and every major player.
+        </p>
+        <ul>
+          <li>Automatic chapter names from file names</li>
+          <li>Auto-selects the largest image as cover</li>
+          <li>Bitrate, sample rate, and mono/stereo matched to source</li>
+          <li>Mixed formats in the same folder — no problem</li>
+        </ul>
+      </div>
+      <div class="feature-row-img">
+        <img
+          src="assets/img/convert.png"
+          alt="m4bmaker convert view"
+        />
+      </div>
+    </div>
+
+    <!-- Chapter editing + player -->
+    <div class="feature-row reverse">
+      <div class="feature-row-text">
+        <h3>Chapter editing with a built-in audio player</h3>
+        <p>
+          Edit chapter titles directly inline — no dialogs, no menus.
+          Click any chapter row to seek the audio player to that exact moment,
+          so you can hear what's there before renaming it.
+        </p>
+        <p>
+          Set a chapter's start time from the current playback position with one click.
+          The whole editing flow is designed to feel fast and tactile.
+        </p>
+        <ul>
+          <li>Inline title editing — just click and type</li>
+          <li>Click chapter → player seeks to that timestamp</li>
+          <li>Set chapter start from playback position</li>
+          <li>Full playback controls: play, pause, scrub</li>
+        </ul>
+      </div>
+      <div class="feature-row-img">
+        <img
+          src="assets/img/chapter-edit-split.png"
+          alt="Chapter editor with inline editing and audio player"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── Tabs / mode screenshot ───────────────────────────────── -->
+<section class="tabs-section">
+  <div class="container">
+    <div class="container--narrow" style="margin-bottom:1.5rem">
+      <div class="label" style="margin-bottom:.5rem">Three modes. One window.</div>
+      <h2 style="font-size:1.8rem; margin-bottom:.75rem;">Build, edit, or split — whatever your audiobook needs.</h2>
+      <p style="color:var(--ink-light);font-size:.95rem;line-height:1.7;">Switch between Build mode (creating a new audiobook from audio files), Edit mode (rechaptering an existing .m4b), and the Queue. Each mode is purpose-built and distraction-free.</p>
+    </div>
+    <img
+      src="assets/img/tabs.png"
+      alt="m4bmaker tab bar showing Build, Edit, and Queue modes"
+      class="tabs-img"
+    />
+    <p class="tabs-caption">Build · Edit · Queue — the three modes of m4bmaker</p>
+  </div>
+</section>
+
+
+<!-- ── Dark section: repair + preflight ─────────────────────── -->
+<section class="dark-section">
+  <div class="container">
+    <div class="section-header">
+      <div class="label">Under the hood</div>
+      <h2>Handles the mess so you don't have to.</h2>
+      <p>Audio files from the internet are often damaged, inconsistent, or poorly formatted. m4bmaker detects and fixes all of it before the first frame is encoded.</p>
+    </div>
+    <ul class="mess-list">
+      <li>
+        <span class="mi">🔧</span>
+        <div><strong>Automatic MP3 repair</strong><span>Corrupted frames, missing VBR/Xing headers, embedded cover images — detected and fixed via stream-copy remux before encoding begins. No re-encoding, no quality loss.</span></div>
+      </li>
+      <li>
+        <span class="mi">📊</span>
+        <div><strong>Preflight audio analysis</strong><span>Every input file is analyzed with ffprobe. Sample rates, channel layouts, and bitrates are summarized. Encoding settings are matched to your source automatically.</span></div>
+      </li>
+      <li>
+        <span class="mi">🎚</span>
+        <div><strong>Smart encoding match</strong><span>64k mono source → 64k mono output. 128k stereo → 128k stereo. The most common settings in your file set win. Override manually any time.</span></div>
+      </li>
+      <li>
+        <span class="mi">🛡</span>
+        <div><strong>Non-destructive pipeline</strong><span>Your original files are never touched. Repaired copies go to a temp directory and are used only for that encode. Sources stay exactly as they were.</span></div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+
+<!-- ── Feature grid ─────────────────────────────────────────── -->
+<section>
+  <div class="container">
+    <div class="section-header">
+      <div class="label">Full feature list</div>
+      <h2>Everything you need. Nothing you don't.</h2>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">✂️</div>
+        <h3>Split into Chapters</h3>
+        <p>Open any existing .m4b and export each chapter as a separate audio file — stream-copied, no re-encoding. Outputs are named and numbered automatically.</p>
+        <span class="accent-tag">Edit mode</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔄</div>
+        <h3>Rechaptering (Edit Mode)</h3>
+        <p>Load an existing .m4b, rename its chapters, adjust timestamps, and save the changes back — without touching the audio stream.</p>
+        <span class="accent-tag">Non-destructive</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📋</div>
+        <h3>Batch Queue</h3>
+        <p>Stage multiple audiobook builds and process them overnight. Add to Queue captures the full current state — folder, metadata, chapters, cover, encoding settings, and output path.</p>
+        <span class="accent-tag">HandBrake-style</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🖼</div>
+        <h3>Cover Art</h3>
+        <p>The largest image in your source directory is automatically selected as the cover. Override with any image file or paste in a URL. Embedded correctly for all major players.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚠️</div>
+        <h3>Close-While-Running Protection</h3>
+        <p>If you try to close the app while an encode is running, you'll get a warning. No accidental job cancellations.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🚀</div>
+        <h3>Multiple Windows</h3>
+        <p>Press ⌘N to open a new independent window. Each window runs its own encode in the background with no shared state.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💻</div>
+        <h3>Full CLI Support</h3>
+        <p>Every feature is available on the command line. Batch scripts, Docker pipelines, and automation workflows work cleanly.</p>
+        <span class="accent-tag">Scriptable</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📁</div>
+        <h3>Flexible Output Options</h3>
+        <p>Choose your output directory, control the file naming, and set the output format. Defaults are sane — overrides are easy.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔓</div>
+        <h3>Free &amp; Open Source</h3>
+        <p>Full source code on GitHub under the GPL-3.0 license. Use it, fork it, contribute to it.</p>
+        <span class="accent-tag">GPL-3.0 License</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── Queue section ────────────────────────────────────────── -->
+<section class="queue-section">
+  <div class="container">
+    <div class="queue-layout">
+      <div class="queue-text">
+        <div class="label">Batch queue</div>
+        <h2>Stage your whole collection. Process overnight.</h2>
+        <p>
+          Add as many audiobook jobs as you want to the queue.
+          Each job captures the full current state — folder, metadata,
+          chapters, cover, encoding settings, output path.
+        </p>
+        <p>
+          Start the queue and walk away. Jobs run sequentially.
+          Failed jobs show an error and continue to the next —
+          one bad source file won't derail the whole night's work.
+        </p>
+        <ul class="queue-list">
+          <li>Add, remove, and reorder jobs</li>
+          <li>Per-job progress tracking</li>
+          <li>Clear completed jobs at any time</li>
+          <li>Stop and resume the queue</li>
+          <li>Failed jobs logged, queue continues</li>
+        </ul>
+      </div>
+      <img
+        src="assets/img/queue.png"
+        alt="m4bmaker batch queue — multiple audiobook jobs with status and progress"
+      />
+    </div>
+  </div>
+</section>
+
+
+<!-- ── CLI section ──────────────────────────────────────────── -->
+<section class="cli-section">
+  <div class="container--narrow">
+    <div class="label" style="margin-bottom:.6rem;">Command line</div>
+    <h2 style="font-size:1.6rem;margin-bottom:.75rem;">For power users and automation.</h2>
+    <p style="color:var(--ink-light);font-size:.95rem;line-height:1.7;max-width:500px">The CLI is a first-class citizen. Everything the GUI can do, the command line can do. Use it in scripts, Docker, or CI pipelines.</p>
+    <div class="cli-block">
+      <pre><span class="comment"># Build an audiobook from a folder</span>
+<span class="prompt">$</span> m4bmaker ./Dune \
+    <span class="flag">--title</span>    <span class="value">"Dune"</span> \
+    <span class="flag">--author</span>   <span class="value">"Frank Herbert"</span> \
+    <span class="flag">--narrator</span> <span class="value">"Scott Brick"</span> \
+    <span class="flag">--cover</span>    <span class="value">cover.jpg</span>
+
+<span class="comment"># Batch-build an entire audiobook library</span>
+<span class="prompt">$</span> for dir in ~/Audiobooks/*/; do
+    m4bmaker <span class="value">"$dir"</span> <span class="flag">--output</span> <span class="value">~/Output/</span>
+  done</pre>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── Pricing / open source ────────────────────────────────── -->
+<section class="pricing" id="pricing">
+  <div class="container">
+    <div class="section-header" style="text-align:center;">
+      <div class="label">Two ways to get it</div>
+      <h2>Free forever. Or support the project.</h2>
+      <p style="margin-inline:auto">m4bmaker is free and open source. The direct download is identical — the $4.99 supports continued development.</p>
+    </div>
+    <div class="pricing-grid">
+
+      <div class="pricing-card pricing-card--free">
+        <div class="label">Open source</div>
+        <h3>GitHub</h3>
+        <div class="price-amount">Free</div>
+        <hr />
+        <p>Full source code. GPL-3.0 license. Build it yourself, contribute to it, or just use it.</p>
+        <ul class="pricing-features">
+          <li>All features included</li>
+          <li>Full CLI implementation included</li>
+          <li>GPL-3.0 license — copyleft protected</li>
+          <li>Community contributions welcome</li>
+          <li>Requires Python 3.11+ and ffmpeg</li>
+          <li>pip install or clone and run</li>
+        </ul>
+        <a href="https://github.com/sageframe-no-kaji/m4bmaker" class="btn btn-ghost" target="_blank" rel="noopener">
+          View on GitHub →
+        </a>
+      </div>
+
+      <div class="pricing-card pricing-card--paid">
+        <div class="label" style="color:var(--dark-muted)">Direct download</div>
+        <h3>m4bmaker for Mac</h3>
+        <div class="price-amount"><sup>$</sup>4.99</div>
+        <hr />
+        <p style="color:var(--dark-prose)">One-time purchase. No subscription. Signed &amp; notarized — ffmpeg bundled, no setup required. Supports continued development.</p>
+        <ul class="pricing-features">
+          <li>All features included</li>
+          <li>ffmpeg bundled — zero setup</li>
+          <li>One-time purchase, no subscription</li>
+          <li>Signed &amp; notarized by Apple</li>
+          <li>Supports ongoing development</li>
+        </ul>
+        <a href="#" class="btn btn-primary" style="margin-top:1.25rem;display:flex;justify-content:center;">
+          Buy &amp; Download →
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── Footer ───────────────────────────────────────────────── -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <a href="https://github.com/sageframe-no-kaji" target="_blank" rel="noopener" class="footer-brand">
+        <img src="assets/icons/sageframe.svg" alt="sageframe" />
+        sageframe
+      </a>
+      <div class="footer-links">
+        <a href="help.html">Help</a>
+        <a href="https://buymeacoffee.com/sageframe" target="_blank" rel="noopener">Buy me a coffee ☕</a>
+      </div>
+      <p class="footer-copy">© 2026 Andrew T. Marcus · sageframe</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

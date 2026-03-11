@@ -831,11 +831,17 @@
         </ul>
       </div>
       <div class="feature-row-img">
-        <img
-          src="assets/img/convert.png"
-          alt="m4Bookmaker build tab"
-          style="border-radius:12px;box-shadow:0 8px 32px rgba(26,26,26,0.18);width:100%;"
-        />
+        <div class="img-compare" data-compare style="border-radius:12px;box-shadow:0 8px 32px rgba(26,26,26,0.18);">
+          <img class="img-compare__base" src="assets/img/convert.png" alt="m4Bookmaker build tab — light mode" />
+          <div class="img-compare__overlay">
+            <img src="assets/img/dark-convert.png" alt="m4Bookmaker build tab — dark mode" style="display:block;width:100%;" />
+          </div>
+          <div class="img-compare__divider"></div>
+          <div class="img-compare__labels">
+            <span class="img-compare__label img-compare__label--light">Light</span>
+            <span class="img-compare__label img-compare__label--dark">Dark</span>
+          </div>
+        </div>
       </div>
     </div>
 

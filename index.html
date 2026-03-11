@@ -186,11 +186,49 @@
       font-size: 0.78rem;
       margin-left: 0.2rem;
     }
+    .hero-steps {
+      list-style: none;
+      display: flex;
+      gap: 0;
+      margin: 1.25rem 0 0.75rem;
+      padding: 0;
+      font-size: 0.88rem;
+      color: var(--ink-light);
+      flex-wrap: wrap;
+    }
+    .hero-steps li {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .hero-steps li::before {
+      content: counter(step);
+      counter-increment: step;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.68rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .hero-steps { counter-reset: step; }
+    .hero-steps li + li::before { margin-left: 1.25rem; }
     .hero-note {
       font-size: 0.8rem;
       color: var(--ink-muted);
     }
     .hero-note a { color: var(--accent); }
+    .cli-trust {
+      margin-top: 1.25rem;
+      font-size: 0.82rem;
+      color: var(--ink-muted);
+      letter-spacing: 0.01em;
+    }
     .platform-soon {
       margin-top: 0.5rem;
       font-size: 0.78rem;
@@ -693,6 +731,7 @@
         m4Bookmaker
       </a>
       <div class="nav-links">
+        <a href="https://m4bookmaker.sageframe.net/help" class="btn btn-ghost" target="_blank" rel="noopener">Help</a>
         <a href="https://github.com/sageframe-no-kaji/m4bmaker" class="btn btn-ghost" target="_blank" rel="noopener">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.111-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .267.18.578.688.48C19.138 20.163 22 16.417 22 12c0-5.523-4.477-10-10-10z"/></svg>
           GitHub — Free
@@ -711,7 +750,7 @@
 <section class="hero">
   <div class="container">
     <div class="hero-eyebrow label">Audiobook Builder for macOS</div>
-    <h1>Your folder of MP3s becomes<br/><em>a beautiful audiobook</em> in seconds.</h1>
+    <h1>Your folder of MP3s becomes<br/><em>a beautiful .m4b audiobook</em> in seconds.</h1>
     <p class="hero-sub">
       Drag in a folder, adjust your chapters, hit Convert.
       m4Bmaker handles the rest — chapters, cover art, metadata,
@@ -726,6 +765,11 @@
         Free on GitHub (GPL-3.0)
       </a>
     </div>
+    <ol class="hero-steps">
+      <li>Drop a folder of audio files</li>
+      <li>Set title, author &amp; chapters</li>
+      <li>Click Convert — done</li>
+    </ol>
     <p class="hero-note">macOS · <a href="https://github.com/sageframe-no-kaji/m4bmaker" target="_blank">open source on GitHub</a> · direct purchase supports development</p>
     <p class="platform-soon">
       <!-- Linux Tux -->
@@ -1078,6 +1122,7 @@
     m4bmaker <span class="value">"$dir"</span> <span class="flag">--output</span> <span class="value">~/Output/</span>
   done</pre>
     </div>
+    <p class="cli-trust">Open source · Built on ffmpeg · Runs locally · No cloud, no account</p>
   </div>
 </section>
 

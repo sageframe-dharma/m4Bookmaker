@@ -357,10 +357,13 @@
       font-size: 0.9rem;
       line-height: 1.8;
     }
-    .feature-row-img img {
+    .feature-row-img img, .feature-row-img video {
       border-radius: 12px;
       box-shadow: 0 16px 48px rgba(26,26,26,0.14);
       width: 100%;
+      max-height: 500px;
+      object-fit: cover;
+      object-position: top center;
     }
 
     /* ── Dark section (repair/preflight) ───────────────────── */
@@ -635,13 +638,13 @@
   <div class="hero-screenshot">
     <div class="hero-screenshot-wrap">
       <img
-        src="assets/img/convert.png"
+        src="assets/img/Screenconvert.png"
         alt="m4bmaker convert view — build an audiobook from a folder of MP3s"
         class="screenshot-main"
       />
       <img
-        src="assets/img/chapter-edit-split.png"
-        alt="m4bmaker chapter editor"
+        src="assets/img/queue.png"
+        alt="m4bmaker encode queue"
         class="screenshot-side"
       />
     </div>
@@ -709,10 +712,23 @@
         </ul>
       </div>
       <div class="feature-row-img">
-        <img
-          src="assets/img/convert.png"
-          alt="m4bmaker convert view"
-        />
+        <div style="position:relative;border-radius:12px;overflow:hidden;box-shadow:0 8px 32px rgba(26,26,26,0.18);">
+          <img
+            src="assets/img/convert.png"
+            alt="m4bmaker build tab — light mode"
+            style="display:block;width:100%;"
+          />
+          <img
+            src="assets/img/dark-convert.png"
+            alt="m4bmaker build tab — dark mode"
+            style="position:absolute;top:0;left:0;width:100%;clip-path:inset(0 0 0 50%);"
+          />
+          <div style="position:absolute;top:0;left:50%;width:2px;height:100%;background:rgba(255,255,255,0.8);transform:translateX(-50%);pointer-events:none;"></div>
+          <div style="position:absolute;bottom:12px;left:0;right:0;display:flex;justify-content:space-between;padding:0 16px;pointer-events:none;">
+            <span style="font-size:11px;font-weight:600;color:rgba(0,0,0,0.5);background:rgba(255,255,255,0.7);padding:2px 8px;border-radius:4px;">Light</span>
+            <span style="font-size:11px;font-weight:600;color:rgba(255,255,255,0.9);background:rgba(0,0,0,0.35);padding:2px 8px;border-radius:4px;">Dark</span>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -735,13 +751,79 @@
           <li>Set chapter start from playback position</li>
           <li>Full playback controls: play, pause, scrub</li>
         </ul>
+        <img
+          src="assets/img/player.png"
+          alt="Built-in audio player widget"
+          style="margin-top:1.25rem;border-radius:8px;width:100%;box-shadow:0 4px 16px rgba(26,26,26,0.12);opacity:.92;"
+        />
       </div>
       <div class="feature-row-img">
         <img
-          src="assets/img/chapter-edit-split.png"
+          src="assets/img/chapter.png"
           alt="Chapter editor with inline editing and audio player"
         />
       </div>
+    </div>    <!-- Edit mode -->
+    <div class="feature-row">
+      <div class="feature-row-text">
+        <h3>Edit an existing .m4b without re-encoding</h3>
+        <p>
+          Open any .m4b file and rechapter it in Edit mode. Rename chapters,
+          adjust timestamps, add or remove chapter markers, and save the changes
+          back in-place — the audio stream is never touched.
+        </p>
+        <p>
+          The built-in Split tool exports each chapter as a separate audio file,
+          stream-copied and numbered automatically.
+        </p>
+        <ul>
+          <li>Rename and reorder chapters with no quality loss</li>
+          <li>Adjust chapter start times from playback position</li>
+          <li>Split into separate chapter files in one click</li>
+          <li>Metadata (title, author, cover) all editable</li>
+        </ul>
+      </div>
+      <div class="feature-row-img">
+        <img
+          src="assets/img/edit.png"
+          alt="m4bmaker Edit mode — rechaptering an existing .m4b file"
+          style="max-height:480px;object-fit:cover;object-position:top center;"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── Queue section ────────────────────────────────────────── -->
+<section class="queue-section">
+  <div class="container">
+    <div class="queue-layout">
+      <div class="queue-text">
+        <div class="label">Batch queue</div>
+        <h2>Stage your whole collection. Process overnight.</h2>
+        <p>
+          Add as many audiobook jobs as you want to the queue.
+          Each job captures the full current state — folder, metadata,
+          chapters, cover, encoding settings, output path.
+        </p>
+        <p>
+          Start the queue and walk away. Jobs run sequentially.
+          Failed jobs show an error and continue to the next —
+          one bad source file won't derail the whole night's work.
+        </p>
+        <ul class="queue-list">
+          <li>Add, remove, and reorder jobs</li>
+          <li>Per-job progress tracking</li>
+          <li>Clear completed jobs at any time</li>
+          <li>Stop and resume the queue</li>
+          <li>Failed jobs logged, queue continues</li>
+        </ul>
+      </div>
+      <img
+        src="assets/img/queue.png"
+        alt="m4bmaker batch queue — multiple audiobook jobs with status and progress"
+      />
     </div>
   </div>
 </section>
@@ -755,12 +837,12 @@
       <h2 style="font-size:1.8rem; margin-bottom:.75rem;">Build, edit, or split — whatever your audiobook needs.</h2>
       <p style="color:var(--ink-light);font-size:.95rem;line-height:1.7;">Switch between Build mode (creating a new audiobook from audio files), Edit mode (rechaptering an existing .m4b), and the Queue. Each mode is purpose-built and distraction-free.</p>
     </div>
-    <img
-      src="assets/img/tabs.png"
-      alt="m4bmaker tab bar showing Build, Edit, and Queue modes"
+    <video
+      src="assets/img/tabs.mov"
+      autoplay loop muted playsinline
       class="tabs-img"
-    />
-    <p class="tabs-caption">Build · Edit · Queue — the three modes of m4bmaker</p>
+    ></video>
+    <p class="tabs-caption">Build mode · Edit mode · Encode Queue — m4bmaker</p>
   </div>
 </section>
 
@@ -858,37 +940,6 @@
 </section>
 
 
-<!-- ── Queue section ────────────────────────────────────────── -->
-<section class="queue-section">
-  <div class="container">
-    <div class="queue-layout">
-      <div class="queue-text">
-        <div class="label">Batch queue</div>
-        <h2>Stage your whole collection. Process overnight.</h2>
-        <p>
-          Add as many audiobook jobs as you want to the queue.
-          Each job captures the full current state — folder, metadata,
-          chapters, cover, encoding settings, output path.
-        </p>
-        <p>
-          Start the queue and walk away. Jobs run sequentially.
-          Failed jobs show an error and continue to the next —
-          one bad source file won't derail the whole night's work.
-        </p>
-        <ul class="queue-list">
-          <li>Add, remove, and reorder jobs</li>
-          <li>Per-job progress tracking</li>
-          <li>Clear completed jobs at any time</li>
-          <li>Stop and resume the queue</li>
-          <li>Failed jobs logged, queue continues</li>
-        </ul>
-      </div>
-      <img
-        src="assets/img/queue.png"
-        alt="m4bmaker batch queue — multiple audiobook jobs with status and progress"
-      />
-    </div>
-  </div>
 </section>
 
 

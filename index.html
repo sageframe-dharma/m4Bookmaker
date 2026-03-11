@@ -272,6 +272,35 @@
       border: 1px solid var(--rule);
       box-shadow: 0 4px 20px rgba(26,26,26,0.08);
     }
+    .mode-strip {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      margin: 2rem 0 3rem;
+      flex-wrap: wrap;
+    }
+    .mode-strip-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      text-align: center;
+      max-width: 160px;
+    }
+    .mode-strip-item img {
+      width: 52px;
+      height: 52px;
+      object-fit: contain;
+    }
+    .mode-strip-item strong {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    .mode-strip-item span {
+      font-size: 0.8rem;
+      color: var(--ink-light);
+      line-height: 1.4;
+    }
     .tabs-caption {
       margin-top: 1rem;
       text-align: center;
@@ -762,6 +791,23 @@
         style="width:60%;min-width:280px;"
       ></video>
     </div>
+    <div class="mode-strip">
+      <div class="mode-strip-item">
+        <img src="assets/img/build-icon.png" alt="Build mode icon" />
+        <strong>Build mode</strong>
+        <span>Join a folder of files into a single .m4b</span>
+      </div>
+      <div class="mode-strip-item">
+        <img src="assets/img/edit-icon.png" alt="Edit mode icon" />
+        <strong>Edit mode</strong>
+        <span>Rechapter, rename, or fix an existing .m4b</span>
+      </div>
+      <div class="mode-strip-item">
+        <img src="assets/img/split-icon.png" alt="Split mode icon" />
+        <strong>Split mode</strong>
+        <span>Export each chapter as a separate audio file</span>
+      </div>
+    </div>
 
     <!-- Joining and building -->
     <div class="feature-row">
@@ -891,36 +937,6 @@
 
 
 
-<!-- ── Dark section: repair + preflight ─────────────────────── -->
-<section class="dark-section">
-  <div class="container">
-    <div class="section-header">
-      <div class="label">Under the hood</div>
-      <h2>Handles the mess so you don't have to.</h2>
-      <p>Audio files from the internet are often damaged, inconsistent, or poorly formatted. m4Bookmaker detects and fixes all of it before the first frame is encoded.</p>
-    </div>
-    <ul class="mess-list">
-      <li>
-        <span class="mi">🔧</span>
-        <div><strong>Automatic MP3 repair</strong><span>Corrupted frames, missing VBR/Xing headers, embedded cover images — detected and fixed via stream-copy remux before encoding begins. No re-encoding, no quality loss.</span></div>
-      </li>
-      <li>
-        <span class="mi">📊</span>
-        <div><strong>Preflight audio analysis</strong><span>Every input file is analyzed with ffprobe. Sample rates, channel layouts, and bitrates are summarized. Encoding settings are matched to your source automatically.</span></div>
-      </li>
-      <li>
-        <span class="mi">🎚</span>
-        <div><strong>Smart encoding match</strong><span>64k mono source → 64k mono output. 128k stereo → 128k stereo. The most common settings in your file set win. Override manually any time.</span></div>
-      </li>
-      <li>
-        <span class="mi">🛡</span>
-        <div><strong>Non-destructive pipeline</strong><span>Your original files are never touched. Repaired copies go to a temp directory and are used only for that encode. Sources stay exactly as they were.</span></div>
-      </li>
-    </ul>
-  </div>
-</section>
-
-
 <!-- ── Feature grid ─────────────────────────────────────────── -->
 <section>
   <div class="container">
@@ -984,6 +1000,33 @@
 </section>
 
 
+<!-- ── Dark section: repair + preflight ─────────────────────── -->
+<section class="dark-section">
+  <div class="container">
+    <div class="section-header">
+      <div class="label">Under the hood</div>
+      <h2>Handles the mess so you don't have to.</h2>
+      <p>Audio files from the internet are often damaged, inconsistent, or poorly formatted. m4Bookmaker detects and fixes all of it before the first frame is encoded.</p>
+    </div>
+    <ul class="mess-list">
+      <li>
+        <span class="mi">🔧</span>
+        <div><strong>Automatic MP3 repair</strong><span>Corrupted frames, missing VBR/Xing headers, embedded cover images — detected and fixed via stream-copy remux before encoding begins. No re-encoding, no quality loss.</span></div>
+      </li>
+      <li>
+        <span class="mi">📊</span>
+        <div><strong>Preflight audio analysis</strong><span>Every input file is analyzed with ffprobe. Sample rates, channel layouts, and bitrates are summarized. Encoding settings are matched to your source automatically.</span></div>
+      </li>
+      <li>
+        <span class="mi">🎚</span>
+        <div><strong>Smart encoding match</strong><span>64k mono source → 64k mono output. 128k stereo → 128k stereo. The most common settings in your file set win. Override manually any time.</span></div>
+      </li>
+      <li>
+        <span class="mi">🛡</span>
+        <div><strong>Non-destructive pipeline</strong><span>Your original files are never touched. Repaired copies go to a temp directory and are used only for that encode. Sources stay exactly as they were.</span></div>
+      </li>
+    </ul>
+  </div>
 </section>
 
 

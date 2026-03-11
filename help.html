@@ -611,19 +611,19 @@ m4bmaker --help</code></pre>
       <!-- Chapter Editor -->
       <div class="subsection" id="gui-chapters">
         <h3>Chapter Editor</h3>
-        <p>The Chapter Editor lets you review and adjust the chapter markers that will be written into the output file. Open it by clicking the <strong>Chapters</strong> tab in the main window.</p>
+        <p>The Chapter Editor lets you review and adjust the chapter markers that will be written into the output file. Open it by clicking the <strong>Chapters</strong> tab in the main window. The table has three columns: <strong>#</strong> (chapter number, auto-assigned), <strong>Time</strong> (start time), and <strong>Title</strong> (editable).</p>
 
         <h4>Renaming chapters</h4>
         <p>Double-click any chapter title to edit it inline. Press <kbd>Return</kbd> to confirm or <kbd>Escape</kbd> to cancel. Chapter names appear in your audiobook player's chapter navigation menu.</p>
 
         <h4>Reordering chapters</h4>
-        <p>Drag any chapter row up or down to change its position. The order in this list is the order they appear in the finished book — it does not need to match source filenames.</p>
+        <p>Select any chapter row and click the <strong>↑</strong> or <strong>↓</strong> buttons below the table to move it up or down. The order in this list is the order they appear in the finished book — it does not need to match source filenames. Chapter numbers are automatically reassigned after every move.</p>
 
-        <h4>Removing a chapter marker</h4>
-        <p>Select a chapter row and press <kbd>Delete</kbd> (or click the minus button). Removing a chapter marker means that section of audio won't have a named chapter point — the audio itself is still included in the output. To exclude a file entirely, remove it from the file list view, not the chapter editor.</p>
+        <h4>Removing a file</h4>
+        <p>Select a chapter row and click the <strong>Remove</strong> button below the table. This removes the audio file <em>entirely</em> from the book — it will not appear in the output at all. Chapter numbers are reassigned automatically. You need at least two files loaded to remove one.</p>
 
-        <h4>Adjusting start times</h4>
-        <p>Each chapter's start time is calculated from the cumulative duration of files before it. You can manually override the start time by clicking the time field and entering a value in <code>H:MM:SS</code> format. This is useful when a file opens with a long silence you want the chapter to skip.</p>
+        <h4>Setting a chapter start time</h4>
+        <p>Chapter start times are normally calculated from the cumulative duration of files before each chapter. To pin a chapter to a precise moment, use the integrated player: seek to the exact spot you want the chapter to begin, select that chapter row in the table, then click <strong>⇥ Insert Time</strong>. The start time updates instantly. The change is undoable with <kbd>⌘Z</kbd>.</p>
 
         <div class="callout note">
           <strong>Non-destructive:</strong> All edits in the Chapter Editor only affect the markers written into the output container. Your original source files are never modified.
@@ -678,7 +678,10 @@ m4bmaker --help</code></pre>
         <p><strong>Volume:</strong> Drag the volume slider on the right side of the player bar.</p>
 
         <h4>Chapter navigation</h4>
-        <p>Click any chapter row in the chapter list while the player is open to jump directly to that chapter's start time. This is the fastest way to confirm your files are in the right order and that chapter boundaries land where you expect.</p>
+        <p>Click any chapter row in the chapter list to load that source file in the player, positioned at the chapter's start time. This is the fastest way to confirm your files are in the right order and that chapter boundaries land where you expect.</p>
+
+        <h4>Stamping a chapter start time</h4>
+        <p>Scrub the player to the exact moment you want a chapter to begin, then select that chapter row in the table and click <strong>⇥ Insert Time</strong>. The chapter's start time is updated to the current playback position instantly. Changes are undoable with <kbd>⌘Z</kbd> and only affect the chapter metadata written into the output — your source files are never modified.</p>
 
         <div class="callout note">
           <strong>No re-encoding:</strong> The player streams directly from your source files. Playback is instant and nothing is modified.

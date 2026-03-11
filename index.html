@@ -695,8 +695,8 @@
   <div class="hero-screenshot">
     <div class="hero-screenshot-wrap">
       <div class="img-compare hero-compare" data-compare>
-        <img class="img-compare__base" src="assets/img/convert.png" alt="m4bmaker build tab — light mode" />
-        <img class="img-compare__overlay" src="assets/img/dark-convert.png" alt="m4bmaker build tab — dark mode" />
+        <img class="img-compare__base" src="assets/img/convert.png" alt="m4bmaker build tab" />
+        <img class="img-compare__overlay" src="assets/img/chapter.png" alt="m4bmaker chapters tab" />
         <div class="img-compare__divider">
           <div class="img-compare__handle">
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -706,8 +706,8 @@
           </div>
         </div>
         <div class="img-compare__labels">
-          <span class="img-compare__label img-compare__label--light">Light</span>
-          <span class="img-compare__label img-compare__label--dark">Dark</span>
+          <span class="img-compare__label img-compare__label--light">Build</span>
+          <span class="img-compare__label img-compare__label--light">Chapters</span>
         </div>
       </div>
     </div>
@@ -752,6 +752,14 @@
       <h2>Designed for how audiobooks are actually built.</h2>
       <p>Most audiobook tools expect perfect input. m4bmaker is built around the reality of audiobook downloads — messy files, inconsistent formats, and titles that need editing.</p>
     </div>
+    <div style="display:flex;justify-content:center;margin:2rem 0 3rem;">
+      <video
+        src="assets/img/tabs.mov"
+        autoplay loop muted playsinline
+        class="tabs-img"
+        style="width:60%;min-width:280px;"
+      ></video>
+    </div>
 
     <!-- Joining and building -->
     <div class="feature-row">
@@ -775,22 +783,11 @@
         </ul>
       </div>
       <div class="feature-row-img">
-        <div class="img-compare" data-compare>
-          <img class="img-compare__base" src="assets/img/convert.png" alt="m4bmaker build tab — light mode" />
-          <img class="img-compare__overlay" src="assets/img/dark-convert.png" alt="m4bmaker build tab — dark mode" />
-          <div class="img-compare__divider">
-            <div class="img-compare__handle">
-              <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <circle cx="11" cy="11" r="10" fill="white" stroke="rgba(0,0,0,0.12)" stroke-width="1"/>
-                <path d="M7 11l-3 0M15 11l3 0M7 11l2-2M7 11l2 2M15 11l-2-2M15 11l-2 2" stroke="#555" stroke-width="1.5" stroke-linecap="round"/>
-              </svg>
-            </div>
-          </div>
-          <div class="img-compare__labels">
-            <span class="img-compare__label img-compare__label--light">Light</span>
-            <span class="img-compare__label img-compare__label--dark">Dark</span>
-          </div>
-        </div>
+        <img
+          src="assets/img/convert.png"
+          alt="m4bmaker build tab"
+          style="border-radius:12px;box-shadow:0 8px 32px rgba(26,26,26,0.18);width:100%;"
+        />
       </div>
     </div>
 
@@ -890,23 +887,6 @@
   </div>
 </section>
 
-
-<!-- ── Tabs / mode screenshot ───────────────────────────────── -->
-<section class="tabs-section">
-  <div class="container">
-    <div class="container--narrow" style="margin-bottom:1.5rem">
-      <div class="label" style="margin-bottom:.5rem">Three modes. One window.</div>
-      <h2 style="font-size:1.8rem; margin-bottom:.75rem;">Build, edit, or split — whatever your audiobook needs.</h2>
-      <p style="color:var(--ink-light);font-size:.95rem;line-height:1.7;">Switch between Build mode (creating a new audiobook from audio files), Edit mode (rechaptering an existing .m4b), and the Queue. Each mode is purpose-built and distraction-free.</p>
-    </div>
-    <video
-      src="assets/img/tabs.mov"
-      autoplay loop muted playsinline
-      class="tabs-img"
-    ></video>
-    <p class="tabs-caption">Build mode · Edit mode · Encode Queue — m4bmaker</p>
-  </div>
-</section>
 
 
 <!-- ── Dark section: repair + preflight ─────────────────────── -->

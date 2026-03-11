@@ -436,19 +436,19 @@
       border-radius: 14px;
       padding: 2.5rem;
     }
-    .pricing-card--free {
+    .pricing-card--paid {
       background: var(--white);
       border: 1px solid var(--rule);
     }
-    .pricing-card--paid {
+    .pricing-card--free {
       background: var(--ink);
       color: var(--dark-text);
     }
-    .pricing-card--paid h3 { color: var(--dark-em); }
-    .pricing-card--paid p  { color: var(--dark-prose); }
-    .pricing-card--paid .price-amount { color: #fff; }
-    .pricing-card--paid hr { border-color: var(--dark-rule); }
-    .pricing-card h3 {
+    .pricing-card--free h3 { color: var(--dark-em); }
+    .pricing-card--free p  { color: var(--dark-prose); }
+    .pricing-card--free .price-amount { color: #fff; }
+    .pricing-card--free hr { border-color: var(--dark-rule); }
+    .pricing-card--free .pricing-features li { color: var(--dark-prose); }    .pricing-card h3 {
       font-family: 'Lora', Georgia, serif;
       font-size: 1.3rem;
       margin-bottom: 0.5rem;
@@ -481,7 +481,7 @@
       color: var(--ink-light);
       padding: 0.3rem 0;
     }
-    .pricing-card--paid .pricing-features li { color: var(--dark-prose); }
+    .pricing-card--paid .pricing-features li { color: var(--ink-light); }
     .pricing-features li::before {
       content: "✓";
       color: var(--accent);
@@ -1018,6 +1018,24 @@
     </div>
     <div class="pricing-grid">
 
+      <div class="pricing-card pricing-card--paid">
+        <div class="label">Direct download</div>
+        <h3>m4Bookmaker for Mac</h3>
+        <div class="price-amount"><sup>$</sup>4.99</div>
+        <hr />
+        <p>One-time purchase. No subscription. Signed &amp; notarized — ffmpeg bundled, no setup required. Supports continued development.</p>
+        <ul class="pricing-features">
+          <li>All features included</li>
+          <li>ffmpeg bundled — zero setup</li>
+          <li>One-time purchase, no subscription</li>
+          <li>Signed &amp; notarized by Apple</li>
+          <li>Supports ongoing development</li>
+        </ul>
+        <a href="#" class="btn btn-primary" style="margin-top:1.25rem;display:flex;justify-content:center;">
+          Buy &amp; Download →
+        </a>
+      </div>
+
       <div class="pricing-card pricing-card--free">
         <div class="label">Open source</div>
         <h3>GitHub</h3>
@@ -1034,24 +1052,6 @@
         </ul>
         <a href="https://github.com/sageframe-no-kaji/m4bmaker" class="btn btn-ghost" target="_blank" rel="noopener">
           View on GitHub →
-        </a>
-      </div>
-
-      <div class="pricing-card pricing-card--paid">
-        <div class="label" style="color:var(--dark-muted)">Direct download</div>
-        <h3>m4bmaker for Mac</h3>
-        <div class="price-amount"><sup>$</sup>4.99</div>
-        <hr />
-        <p style="color:var(--dark-prose)">One-time purchase. No subscription. Signed &amp; notarized — ffmpeg bundled, no setup required. Supports continued development.</p>
-        <ul class="pricing-features">
-          <li>All features included</li>
-          <li>ffmpeg bundled — zero setup</li>
-          <li>One-time purchase, no subscription</li>
-          <li>Signed &amp; notarized by Apple</li>
-          <li>Supports ongoing development</li>
-        </ul>
-        <a href="#" class="btn btn-primary" style="margin-top:1.25rem;display:flex;justify-content:center;">
-          Buy &amp; Download →
         </a>
       </div>
     </div>

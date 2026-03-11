@@ -435,7 +435,10 @@
     .pricing-card {
       border-radius: 14px;
       padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
     }
+    .pricing-card .btn { margin-top: auto; width: 100%; justify-content: center; padding-top: 1.25rem; }
     .pricing-card--paid {
       background: var(--white);
       border: 1px solid var(--rule);
@@ -467,7 +470,6 @@
     }
     .pricing-card hr { border: none; border-top: 1px solid var(--rule); margin: 1.25rem 0; }
     .pricing-card p { font-size: 0.9rem; color: var(--ink-light); line-height: 1.65; margin-bottom: 0.6rem; }
-    .pricing-card .btn { margin-top: 1.25rem; width: 100%; justify-content: center; }
     .pricing-features {
       list-style: none;
       margin: 0;
@@ -1043,7 +1045,6 @@
         <hr />
         <p>Full source code. GPL-3.0 license. Build it yourself, contribute to it, or just use it.</p>
         <ul class="pricing-features">
-          <li>All features included</li>
           <li>Full CLI implementation included</li>
           <li>GPL-3.0 license — copyleft protected</li>
           <li>Community contributions welcome</li>

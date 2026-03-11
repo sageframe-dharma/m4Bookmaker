@@ -576,6 +576,73 @@
       .footer-inner { flex-direction: column; align-items: flex-start; }
       .nav-links .btn-ghost { display: none; }
     }
+
+    /* ── Light/dark compare slider ── */
+    .img-compare {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(26,26,26,0.18);
+      cursor: col-resize;
+      user-select: none;
+    }
+    .img-compare__base,
+    .img-compare__overlay {
+      display: block;
+      width: 100%;
+    }
+    .img-compare__overlay {
+      position: absolute;
+      top: 0; left: 0;
+      clip-path: inset(0 50% 0 0);
+      transition: clip-path 0s;
+    }
+    .img-compare__divider {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 2px;
+      height: 100%;
+      background: rgba(255,255,255,0.85);
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .img-compare__handle {
+      width: 40px;
+      height: 40px;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .img-compare__labels {
+      position: absolute;
+      bottom: 12px;
+      left: 0; right: 0;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 16px;
+      pointer-events: none;
+    }
+    .img-compare__label {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    .img-compare__label--light {
+      color: rgba(0,0,0,0.55);
+      background: rgba(255,255,255,0.75);
+    }
+    .img-compare__label--dark {
+      color: rgba(255,255,255,0.92);
+      background: rgba(0,0,0,0.35);
+    }
   </style>
 </head>
 <body>
@@ -712,21 +779,20 @@
         </ul>
       </div>
       <div class="feature-row-img">
-        <div style="position:relative;border-radius:12px;overflow:hidden;box-shadow:0 8px 32px rgba(26,26,26,0.18);">
-          <img
-            src="assets/img/convert.png"
-            alt="m4bmaker build tab — light mode"
-            style="display:block;width:100%;"
-          />
-          <img
-            src="assets/img/dark-convert.png"
-            alt="m4bmaker build tab — dark mode"
-            style="position:absolute;top:0;left:0;width:100%;clip-path:inset(0 0 0 50%);"
-          />
-          <div style="position:absolute;top:0;left:50%;width:2px;height:100%;background:rgba(255,255,255,0.8);transform:translateX(-50%);pointer-events:none;"></div>
-          <div style="position:absolute;bottom:12px;left:0;right:0;display:flex;justify-content:space-between;padding:0 16px;pointer-events:none;">
-            <span style="font-size:11px;font-weight:600;color:rgba(0,0,0,0.5);background:rgba(255,255,255,0.7);padding:2px 8px;border-radius:4px;">Light</span>
-            <span style="font-size:11px;font-weight:600;color:rgba(255,255,255,0.9);background:rgba(0,0,0,0.35);padding:2px 8px;border-radius:4px;">Dark</span>
+        <div class="img-compare" data-compare>
+          <img class="img-compare__base" src="assets/img/convert.png" alt="m4bmaker build tab — light mode" />
+          <img class="img-compare__overlay" src="assets/img/dark-convert.png" alt="m4bmaker build tab — dark mode" />
+          <div class="img-compare__divider">
+            <div class="img-compare__handle">
+              <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="11" cy="11" r="10" fill="white" stroke="rgba(0,0,0,0.12)" stroke-width="1"/>
+                <path d="M7 11l-3 0M15 11l3 0M7 11l2-2M7 11l2 2M15 11l-2-2M15 11l-2 2" stroke="#555" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+          </div>
+          <div class="img-compare__labels">
+            <span class="img-compare__label img-compare__label--light">Light</span>
+            <span class="img-compare__label img-compare__label--dark">Dark</span>
           </div>
         </div>
       </div>
@@ -1033,6 +1099,55 @@
     </div>
   </div>
 </footer>
+
+<script>
+(function () {
+  const INIT = 50; // starting split %
+
+  document.querySelectorAll('[data-compare]').forEach(function (wrap) {
+    var overlay = wrap.querySelector('.img-compare__overlay');
+    var divider = wrap.querySelector('.img-compare__divider');
+    var isDragging = false;
+
+    function setPos(pct) {
+      pct = Math.max(2, Math.min(98, pct));
+      overlay.style.clipPath = 'inset(0 ' + (100 - pct) + '% 0 0)';
+      divider.style.left = pct + '%';
+    }
+
+    setPos(INIT);
+
+    function getPct(e) {
+      var rect = wrap.getBoundingClientRect();
+      var clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      return ((clientX - rect.left) / rect.width) * 100;
+    }
+
+    divider.addEventListener('mousedown', function (e) {
+      isDragging = true;
+      e.preventDefault();
+    });
+    divider.addEventListener('touchstart', function (e) {
+      isDragging = true;
+    }, { passive: true });
+
+    document.addEventListener('mousemove', function (e) {
+      if (isDragging) setPos(getPct(e));
+    });
+    document.addEventListener('touchmove', function (e) {
+      if (isDragging) setPos(getPct(e));
+    }, { passive: true });
+
+    document.addEventListener('mouseup', function () { isDragging = false; });
+    document.addEventListener('touchend', function () { isDragging = false; });
+
+    // also allow clicking anywhere on the image to snap
+    wrap.addEventListener('click', function (e) {
+      if (!isDragging) setPos(getPct(e));
+    });
+  });
+}());
+</script>
 
 </body>
 </html>

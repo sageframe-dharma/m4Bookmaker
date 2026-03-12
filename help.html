@@ -624,10 +624,18 @@ m4bmaker --help</code></pre>
         <p>Double-click any chapter title to edit it inline. Press <kbd>Return</kbd> to confirm or <kbd>Escape</kbd> to cancel. Chapter names appear in your audiobook player's chapter navigation menu.</p>
 
         <h4>Reordering chapters</h4>
-        <p>Select any chapter row and click the <strong>↑</strong> or <strong>↓</strong> buttons below the table to move it up or down. The order in this list is the order they appear in the finished book — it does not need to match source filenames. Chapter numbers are automatically reassigned after every move.</p>
+        <p>Select any chapter row and click the <strong>↑</strong> or <strong>↓</strong> buttons below the table to move it up or down. Chapter numbers are automatically reassigned after every move.</p>
+        <p><strong>Build mode:</strong> reordering also moves the corresponding source file, so the audio is encoded in the new order.</p>
+        <p><strong>Edit mode:</strong> only the chapter-marker timestamps are rearranged — the audio stream in the file is never rewritten. Use this to relabel which portion of audio carries which chapter name.</p>
 
-        <h4>Removing a file</h4>
-        <p>Select a chapter row and click the <strong>Remove</strong> button below the table. This removes the audio file <em>entirely</em> from the book — it will not appear in the output at all. Chapter numbers are reassigned automatically. You need at least two files loaded to remove one.</p>
+        <h4>Removing a chapter or file</h4>
+        <p><strong>Build mode — Remove File:</strong> removes the corresponding audio file entirely from the book. It will not appear in the output at all. You need at least two files loaded to remove one.</p>
+        <p><strong>Edit mode — Remove Chapter:</strong> deletes only the chapter marker. The audio plays straight through without a break — nothing is cut from the file. Chapter numbers are reassigned automatically.</p>
+
+        <h4>Merging chapters</h4>
+        <p>Shift-click a consecutive range of rows to select them, then click <strong>Merge</strong>. The selected rows collapse into a single chapter using the first row's title. The audio for all merged rows is still present — the merge just removes the intermediate chapter-boundary markers.</p>
+        <p><strong>Build mode:</strong> all source files still encode in full after a merge. After the first merge, the ↑ ↓ and Remove File buttons hide because the file count and chapter count no longer match 1:1. You can continue merging further ranges.</p>
+        <p><strong>Edit mode:</strong> markers are collapsed and the audio stream is untouched, as with all edit-mode operations.</p>
 
         <h4>Setting a chapter start time</h4>
         <p>Chapter start times are normally calculated from the cumulative duration of files before each chapter. To pin a chapter to a precise moment, use the integrated player: seek to the exact spot you want the chapter to begin, select that chapter row in the table, then click <strong>⇥ Insert Time</strong>. The start time updates instantly. The change is undoable with <kbd>⌘Z</kbd>.</p>
@@ -645,12 +653,15 @@ m4bmaker --help</code></pre>
         <ol class="steps">
           <li><span class="step-num">1</span><span>Click the <strong>Edit Mode</strong> button in the toolbar, or drag a .m4b file directly onto the window.</span></li>
           <li><span class="step-num">2</span><span>The existing chapters are loaded into the Chapter Editor.</span></li>
-          <li><span class="step-num">3</span><span>Rename, reorder, add, or remove chapter markers as needed.</span></li>
+          <li><span class="step-num">3</span><span>Rename, reorder, merge, or remove chapter markers as needed.</span></li>
           <li><span class="step-num">4</span><span>Click <strong>Save Changes</strong>. Only the chapter metadata is rewritten — the audio stream is left completely untouched.</span></li>
         </ol>
 
         <div class="callout">
           <strong>Zero quality loss:</strong> Because no audio re-encoding happens, you can rechapter the same file multiple times with no degradation whatsoever.
+        </div>
+        <div class="callout note">
+          <strong>Audio order is preserved:</strong> In Edit Mode, reordering, removing, or merging chapter markers never changes the order of audio in the file. Only the metadata timestamps and titles are rewritten.
         </div>
       </div>
 

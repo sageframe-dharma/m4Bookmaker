@@ -3,19 +3,52 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>m4Bookmaker — Audiobook Builder for Mac &amp; Windows</title>
-  <meta name="description" content="Turn a folder of audio files into a clean .m4b audiobook in seconds. Available for Mac and Windows. Automatic chapters, cover art, audio repair, and a built-in preview player. Free on GitHub." />
+  <title>m4Bookmaker — M4B Audiobook Builder for Mac &amp; Windows</title>
+  <meta name="description" content="Convert a folder of MP3s into a clean M4B audiobook in seconds. Automatic chapters, cover art, metadata, and audio repair built in. No ffmpeg setup required. Free on GitHub or $4.99 direct download for Mac &amp; Windows." />
+  <meta name="keywords" content="m4b audiobook builder, convert mp3 to m4b, audiobook creator mac, audiobook maker windows, m4b chapters, ffmpeg audiobook gui, mp3 to audiobook" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="m4Bookmaker — Audiobook Builder for Mac &amp; Windows" />
-  <meta property="og:description" content="Turn a folder of audio files into a clean .m4b audiobook in seconds. Automatic chapters, cover art, audio repair, and a built-in preview player." />
+  <meta property="og:title" content="m4Bookmaker — M4B Audiobook Builder for Mac &amp; Windows" />
+  <meta property="og:description" content="Convert a folder of MP3s into a clean M4B audiobook in seconds. Automatic chapters, cover art, audio repair. No ffmpeg setup required." />
   <meta property="og:image" content="https://m4bookmaker.sageframe.net/assets/icons/app-icon.png" />
   <meta property="og:url" content="https://m4bookmaker.sageframe.net" />
+  <link rel="canonical" href="https://m4bookmaker.sageframe.net/" />
   <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/favicon-192.png" />
   <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "m4Bookmaker",
+    "description": "Convert a folder of MP3s into a clean M4B audiobook with automatic chapters, cover art, metadata, and audio repair. Available for Mac and Windows.",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": ["macOS", "Windows"],
+    "url": "https://m4bookmaker.sageframe.net",
+    "offers": [
+      {
+        "@type": "Offer",
+        "price": "4.99",
+        "priceCurrency": "USD",
+        "description": "Direct download — Mac &amp; Windows"
+      },
+      {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "description": "Free on GitHub (GPL-3.0)"
+      }
+    ],
+    "author": {
+      "@type": "Person",
+      "name": "Andrew T. Marcus"
+    },
+    "softwareVersion": "0.1.0",
+    "license": "https://www.gnu.org/licenses/gpl-3.0.html"
+  }
+  </script>
   <style>
     /* ── Design tokens ─────────────────────────────────────── */
     :root {
@@ -751,8 +784,8 @@
 <!-- ── Hero ────────────────────────────────────────────────── -->
 <section class="hero">
   <div class="container">
-    <div class="hero-eyebrow label">Audiobook Builder for Mac &amp; Windows</div>
-    <h1>Your folder of MP3s becomes<br/><em>a beautiful .m4b audiobook</em> in seconds.</h1>
+    <div class="hero-eyebrow label">M4B Audiobook Builder for Mac &amp; Windows</div>
+    <h1>Your folder of MP3s becomes<br/><em>a beautiful M4B audiobook</em> in seconds.</h1>
     <p class="hero-sub">
       Drag in a folder, adjust your chapters, hit Convert.
       m4Bookmaker handles the rest — chapters, cover art, metadata,
@@ -783,8 +816,8 @@
   <div class="hero-screenshot">
     <div class="hero-screenshot-wrap">
       <div class="img-compare hero-compare" data-compare>
-        <img class="img-compare__base" src="assets/img/convert.png" alt="m4Bookmaker build tab" />
-        <img class="img-compare__overlay" src="assets/img/chapter.png" alt="m4Bookmaker chapters tab" />
+        <img class="img-compare__base" src="assets/img/convert.png" alt="m4Bookmaker build tab — MP3 files loaded, ready to convert to M4B" />
+        <img class="img-compare__overlay" src="assets/img/chapter.png" alt="m4Bookmaker chapter editor — set chapter start times for M4B audiobook" />
         <div class="img-compare__divider">
           <div class="img-compare__handle">
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -850,17 +883,17 @@
     </div>
     <div class="mode-strip">
       <div class="mode-strip-item">
-        <img src="assets/img/build-icon.png" alt="Build mode icon" />
+        <img src="assets/img/build-icon.png" alt="Build mode — join MP3 files into a single M4B audiobook" />
         <strong>Build mode</strong>
         <span>Join a folder of files into a single .m4b</span>
       </div>
       <div class="mode-strip-item">
-        <img src="assets/img/edit-icon.png" alt="Edit mode icon" />
+        <img src="assets/img/edit-icon.png" alt="Edit mode — rechapter or re-cover an existing M4B audiobook" />
         <strong>Edit mode</strong>
         <span>Rechapter, rename, or fix an existing .m4b</span>
       </div>
       <div class="mode-strip-item">
-        <img src="assets/img/split-icon.png" alt="Split mode icon" />
+        <img src="assets/img/split-icon.png" alt="Split mode — export M4B chapters as separate audio files" />
         <strong>Split mode</strong>
         <span>Export each chapter as a separate audio file</span>
       </div>
@@ -889,9 +922,9 @@
       </div>
       <div class="feature-row-img">
         <div class="img-compare" data-compare style="border-radius:12px;box-shadow:0 8px 32px rgba(26,26,26,0.18);">
-          <img class="img-compare__base" src="assets/img/convert.png" alt="m4Bookmaker build tab — light mode" />
+          <img class="img-compare__base" src="assets/img/convert.png" alt="m4Bookmaker light mode — folder of MP3s ready to build as M4B audiobook" />
           <div class="img-compare__overlay">
-            <img src="assets/img/dark-convert.png" alt="m4Bookmaker build tab — dark mode" style="display:block;width:100%;" />
+            <img src="assets/img/dark-convert.png" alt="m4Bookmaker dark mode — folder of MP3s ready to build as M4B audiobook" style="display:block;width:100%;" />
           </div>
           <div class="img-compare__divider">
             <div class="img-compare__handle">

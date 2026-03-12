@@ -518,17 +518,24 @@
     <!-- ─────────────────────────────────────────────────────── -->
     <section class="help-section" id="getting-started">
       <h2>Getting Started</h2>
-      <p class="section-deck">m4bmaker runs on macOS. Install from GitHub for free (requires Python and ffmpeg), or buy the direct download ($4.99) — signed, notarized, and bundled with ffmpeg.</p>
+      <p class="section-deck">m4Bookmaker runs on Mac and Windows. Install from GitHub for free (requires Python and ffmpeg), or buy the direct download ($4.99) — self-contained, ffmpeg bundled, no setup required.</p>
 
       <div class="subsection">
         <h3>Direct download ($4.99)</h3>
-        <p>Everything is bundled — no Python, no Homebrew, no ffmpeg to install. Signed and notarized by Apple.</p>
+        <p>Everything is bundled — no Python, no Homebrew, no ffmpeg to install.</p>
+        <h4 style="margin:1rem 0 0.4rem;font-size:0.95rem;">Mac</h4>
         <ol class="steps">
-          <li><span class="step-num">1</span><span>Download m4bmaker from the <a href="index.html#pricing">product page</a>. Open the DMG and drag m4bmaker to your Applications folder.</span></li>
-          <li><span class="step-num">2</span><span>Launch from Applications or Spotlight (<strong>⌘Space → m4bmaker</strong>).</span></li>
+          <li><span class="step-num">1</span><span>Download the Mac DMG from the <a href="index.html#pricing">product page</a>. Open the DMG and drag m4Bookmaker to your Applications folder.</span></li>
+          <li><span class="step-num">2</span><span>Launch from Applications or Spotlight (<strong>⌘Space → m4Bookmaker</strong>).</span></li>
           <li><span class="step-num">3</span><span>On first launch, macOS may ask you to confirm opening the app. Click <strong>Open</strong>.</span></li>
         </ol>
-        <p>Update by re-downloading the latest DMG from the product page.</p>
+        <h4 style="margin:1rem 0 0.4rem;font-size:0.95rem;">Windows</h4>
+        <ol class="steps">
+          <li><span class="step-num">1</span><span>Download the Windows installer from the <a href="index.html#pricing">product page</a>. Run the installer and follow the prompts.</span></li>
+          <li><span class="step-num">2</span><span>Launch m4Bookmaker from the Start menu or desktop shortcut.</span></li>
+          <li><span class="step-num">3</span><span>On first launch, Windows SmartScreen may show a warning. Click <strong>More info → Run anyway</strong>.</span></li>
+        </ol>
+        <p>Update by re-downloading the latest installer from the product page.</p>
       </div>
 
       <div class="subsection">
@@ -1036,17 +1043,17 @@ man m4bmaker</code></pre>
         <details class="faq-item">
           <summary><span class="faq-icon">+</span>What's the difference between the direct download and the GitHub version?</summary>
           <div class="faq-answer">
-            <p><strong>Direct download ($4.99):</strong> Fully self-contained — no Python, no Homebrew, no ffmpeg to install. Signed and notarized by Apple so macOS opens it without warnings. The CLI is not accessible from the app bundle — use the GitHub install for scripting.</p>
+            <p><strong>Direct download ($4.99):</strong> Fully self-contained — no Python, no Homebrew, no ffmpeg to install. Available for Mac and Windows. The CLI is not accessible from the app bundle — use the GitHub install for scripting.</p>
             <p><strong>GitHub (free, GPL-3.0):</strong> Full source code. Includes the CLI. Requires Python 3.11+ and <code>brew install ffmpeg</code>. Update manually with <code>git pull && pip install -e .</code></p>
             <p>The core encoding pipeline, GUI features, and output quality are <strong>identical</strong> in both versions.</p>
           </div>
         </details>
 
         <details class="faq-item">
-          <summary><span class="faq-icon">+</span>Can I use m4bmaker on Linux or Windows?</summary>
+          <summary><span class="faq-icon">+</span>Can I use m4Bookmaker on Linux?</summary>
           <div class="faq-answer">
-            <p>The GUI is macOS-only right now. <strong>Linux and Windows are coming soon.</strong></p>
-            <p>The <strong>CLI works today</strong> on any platform where Python and ffmpeg run — including Linux and Windows. Install via GitHub and use the <code>m4bmaker</code> command directly.</p>
+            <p>The GUI is available on <strong>Mac and Windows</strong>. Linux GUI support is coming soon.</p>
+            <p>The <strong>CLI works today</strong> on any platform where Python and ffmpeg run — including Linux. Install via GitHub and use the <code>m4bmaker</code> command directly.</p>
           </div>
         </details>
 
@@ -1079,7 +1086,7 @@ man m4bmaker</code></pre>
           <summary><span class="faq-icon">+</span>How do I report a bug or request a feature?</summary>
           <div class="faq-answer">
             <p>Open an issue on GitHub: <a href="https://github.com/sageframe-no-kaji/m4bmaker/issues" target="_blank">github.com/sageframe-no-kaji/m4bmaker/issues</a></p>
-            <p>Please include your m4bmaker version (shown in the About dialog), your macOS version, and a clear description of what happened vs. what you expected. For encoding issues, the log output shown in the error detail panel is very helpful.</p>
+            <p>Please include your m4Bookmaker version (shown in the About dialog), your macOS or Windows version, and a clear description of what happened vs. what you expected. For encoding issues, the log output shown in the error detail panel is very helpful.</p>
           </div>
         </details>
 

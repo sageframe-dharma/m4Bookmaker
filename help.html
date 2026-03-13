@@ -640,6 +640,18 @@ m4bmaker --help</code></pre>
         <h4>Setting a chapter start time</h4>
         <p>Chapter start times are normally calculated from the cumulative duration of files before each chapter. To pin a chapter to a precise moment, use the integrated player: seek to the exact spot you want the chapter to begin, select that chapter row in the table, then click <strong>⇥ Insert Time</strong>. The start time updates instantly. The change is undoable with <kbd>⌘Z</kbd>.</p>
 
+        <h4>Bulk-editing chapter titles</h4>
+        <p>Right-click anywhere in the chapter table to open the bulk-edit menu. Operations apply to the selected rows, or to all rows if nothing is selected. Every action is undoable with <kbd>⌘Z</kbd> / <kbd>Ctrl+Z</kbd>.</p>
+        <ul>
+          <li><strong>Find / Replace…</strong> — search and replace text across titles. Supports regex.</li>
+          <li><strong>Remove Numeric Prefixes</strong> — strips leading numbers like "01. " or "3 - ".</li>
+          <li><strong>Add Sequential Numeric Prefix</strong> — prepends "1. ", "2. ", … to each title.</li>
+          <li><strong>Number as "Chapter X"</strong> — replaces titles entirely with "Chapter 1", "Chapter 2", …</li>
+          <li><strong>Add Prefix… / Add Suffix…</strong> — prepend or append custom text to every title.</li>
+          <li><strong>Title Case / Sentence Case</strong> — change capitalisation.</li>
+          <li><strong>Clear Titles</strong> — blanks out all titles so you can start fresh.</li>
+        </ul>
+
         <div class="callout note">
           <strong>Non-destructive:</strong> All edits in the Chapter Editor only affect the markers written into the output container. Your original source files are never modified.
         </div>

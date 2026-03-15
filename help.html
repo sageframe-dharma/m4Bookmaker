@@ -518,7 +518,7 @@
     <!-- ─────────────────────────────────────────────────────── -->
     <section class="help-section" id="getting-started">
       <h2>Getting Started</h2>
-      <p class="section-deck">m4Bookmaker runs on Mac and Windows. Install from GitHub for free (requires Python and ffmpeg), or buy the direct download ($4.99) — self-contained, ffmpeg bundled, no setup required.</p>
+      <p class="section-deck">m4Bookmaker runs on Mac, Windows, and Linux. Install from PyPI or GitHub for free (requires Python and ffmpeg), or buy the direct download ($4.99) — self-contained, ffmpeg bundled, no setup required.</p>
 
       <div class="subsection">
         <h3>Direct download ($4.99)</h3>
@@ -541,18 +541,37 @@
       <div class="subsection">
         <h3>GitHub version (free)</h3>
         <p>The full source, GPL-3.0-licensed. Includes both the GUI and the CLI. Requires Python 3.11+ and ffmpeg.</p>
-        <pre><code># 1. Install ffmpeg
-brew install ffmpeg
 
-# 2. Clone the repo
+        <h4 style="margin:1rem 0 0.4rem;font-size:0.95rem;">Install from PyPI (recommended)</h4>
+        <pre><code># Install (CLI only)
+pip install m4bmaker
+
+# Or with the GUI
+pip install m4bmaker[gui]
+
+# Verify
+m4bmaker --help</code></pre>
+
+        <h4 style="margin:1rem 0 0.4rem;font-size:0.95rem;">Install from source</h4>
+        <pre><code># Clone the repo
 git clone https://github.com/sageframe-no-kaji/m4bmaker
 cd m4bmaker
 
-# 3. Install
+# Install
 pip install -e .
 
-# 4. Verify
+# Verify
 m4bmaker --help</code></pre>
+
+        <h4 style="margin:1rem 0 0.4rem;font-size:0.95rem;">Install ffmpeg</h4>
+        <pre><code># macOS
+brew install ffmpeg
+
+# Ubuntu / Debian
+sudo apt install ffmpeg
+
+# Windows (winget)
+winget install ffmpeg</code></pre>
         <div class="callout note">
           <strong>Python note:</strong> macOS system Python does not include tkinter (needed for the GUI). Install Python from <a href="https://www.python.org/downloads/" target="_blank">python.org</a> or via <code>brew install python</code> — both include tkinter. The CLI works with any Python 3.11+.
         </div>

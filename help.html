@@ -1146,7 +1146,7 @@ man m4bmaker</code></pre>
 
       <div class="subsection">
         <h3>What the app sends</h3>
-        <p>The <strong>GUI</strong> makes one outbound request on startup: a check to the GitHub Releases API to see whether a newer version is available.</p>
+        <p>The <strong>GUI</strong> makes one outbound request on startup: a check to the GitHub Releases API to see whether a newer version is available. <strong>You can disable this</strong> at any time via <strong>Help → Check for Updates on Startup</strong> — the setting is saved and persists between sessions.</p>
         <pre><code>GET https://api.github.com/repos/sageframe-no-kaji/m4bmaker/releases/latest
 User-Agent: m4bmaker/&lt;version&gt;</code></pre>
         <p>This sends your <strong>IP address</strong> and <strong>installed version number</strong> to GitHub's API. No other data is transmitted. The check runs silently in the background and fails silently if you are offline.</p>
@@ -1155,11 +1155,12 @@ User-Agent: m4bmaker/&lt;version&gt;</code></pre>
 
       <div class="subsection">
         <h3>What the app never does</h3>
-        <ul class="steps" style="list-style: disc; padding-left: 1.5rem;">
-          <li>Never uploads audio files, metadata, or cover art</li>
-          <li>Never tracks usage or analytics</li>
-          <li>Never stores or transmits your file paths or book titles</li>
-          <li>Never contacts any server other than the GitHub API on startup</li>
+        <ul style="margin: 0.75rem 0 0.75rem 1.5rem; line-height: 1.8;">
+          <li>Uploads audio files, metadata, or cover art</li>
+          <li>Tracks usage or analytics</li>
+          <li>Stores or transmits your file paths or book titles</li>
+          <li>Contacts any server other than the GitHub API on startup</li>
+          <li>Makes any network call if you disable <strong>Help → Check for Updates on Startup</strong></li>
         </ul>
       </div>
 

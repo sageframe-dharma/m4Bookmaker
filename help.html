@@ -505,6 +505,7 @@
 
     <div class="sidebar-heading">Help</div>
     <a href="#faq" class="sidebar-link">FAQ</a>
+    <a href="#privacy" class="sidebar-link">Privacy</a>
 
   </aside>
 
@@ -1133,6 +1134,39 @@ man m4bmaker</code></pre>
         </details>
 
       </ul>
+    </section>
+
+
+    <!-- ─────────────────────────────────────────────────────── -->
+    <!-- Privacy & Network Activity                              -->
+    <!-- ─────────────────────────────────────────────────────── -->
+    <section class="help-section" id="privacy">
+      <h2>Privacy &amp; Network Activity</h2>
+      <p class="section-deck">m4Bookmaker is fully local — your audio files and metadata never leave your machine.</p>
+
+      <div class="subsection">
+        <h3>What the app sends</h3>
+        <p>The <strong>GUI</strong> makes one outbound request on startup: a check to the GitHub Releases API to see whether a newer version is available.</p>
+        <pre><code>GET https://api.github.com/repos/sageframe-no-kaji/m4bmaker/releases/latest
+User-Agent: m4bmaker/&lt;version&gt;</code></pre>
+        <p>This sends your <strong>IP address</strong> and <strong>installed version number</strong> to GitHub's API. No other data is transmitted. The check runs silently in the background and fails silently if you are offline.</p>
+        <p>The <strong>CLI</strong> (<code>m4bmaker</code> command) makes <strong>no network calls at all</strong>.</p>
+      </div>
+
+      <div class="subsection">
+        <h3>What the app never does</h3>
+        <ul class="steps" style="list-style: disc; padding-left: 1.5rem;">
+          <li>Never uploads audio files, metadata, or cover art</li>
+          <li>Never tracks usage or analytics</li>
+          <li>Never stores or transmits your file paths or book titles</li>
+          <li>Never contacts any server other than the GitHub API on startup</li>
+        </ul>
+      </div>
+
+      <div class="subsection">
+        <h3>Third-party services</h3>
+        <p>Update checks go to <strong>api.github.com</strong>, subject to <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">GitHub's privacy policy</a>. No other third-party service is contacted.</p>
+      </div>
     </section>
 
 

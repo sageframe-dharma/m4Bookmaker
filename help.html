@@ -519,11 +519,12 @@
     <!-- ─────────────────────────────────────────────────────── -->
     <section class="help-section" id="getting-started">
       <h2>Getting Started</h2>
-      <p class="section-deck">m4Bookmaker runs on Mac, Windows, and Linux. Install from PyPI or GitHub for free (requires Python and ffmpeg), or buy the direct download ($4.99) — self-contained, ffmpeg bundled, no setup required.</p>
+      <p class="section-deck">m4Bookmaker runs on macOS 13 (Ventura) or later, Windows 10 or later, and Linux. Install from PyPI or GitHub for free (requires Python and ffmpeg), or buy the direct download ($4.99) — self-contained, ffmpeg bundled, no setup required.</p>
 
       <div class="subsection">
         <h3>Direct download ($4.99)</h3>
         <p>Everything is bundled — no Python, no Homebrew, no ffmpeg to install.</p>
+        <p><strong>System requirements:</strong> macOS 13 (Ventura) or later on Intel or Apple Silicon, or 64-bit Windows 10 or later. Macs that can&rsquo;t run macOS 13 — including most models from 2015 and earlier — are not supported by the app; use the free <a href="#cli-install">command-line version</a> instead.</p>
         <h4 style="margin:1rem 0 0.4rem;font-size:0.95rem;">Mac</h4>
         <ol class="steps">
           <li><span class="step-num">1</span><span>Download the Mac DMG from the <a href="index.html#pricing">product page</a>. Open the DMG and drag m4Bookmaker to your Applications folder.</span></li>
@@ -574,7 +575,7 @@ sudo apt install ffmpeg
 # Windows (winget)
 winget install ffmpeg</code></pre>
         <div class="callout note">
-          <strong>Python note:</strong> macOS system Python does not include tkinter (needed for the GUI). Install Python from <a href="https://www.python.org/downloads/" target="_blank">python.org</a> or via <code>brew install python</code> — both include tkinter. The CLI works with any Python 3.11+.
+          <strong>Python note:</strong> m4Bookmaker needs Python 3.11 or newer. The Python that ships with macOS is 3.9, so it won&rsquo;t work for either the GUI or the CLI — install a current version from <a href="https://www.python.org/downloads/" target="_blank">python.org</a> or via <code>brew install python</code>. The GUI also needs Qt, which <code>pip install m4bmaker[gui]</code> installs for you.
         </div>
         <div class="callout note">
           <strong>Don't have Homebrew?</strong> Install from <a href="https://brew.sh" target="_blank">brew.sh</a> — one command, takes about a minute.
@@ -1089,6 +1090,15 @@ man m4bmaker</code></pre>
             <p><strong>Direct download ($4.99):</strong> Fully self-contained — no Python, no Homebrew, no ffmpeg to install. Available for Mac and Windows. The CLI is not accessible from the app bundle — use the GitHub install for scripting.</p>
             <p><strong>GitHub (free, GPL-3.0):</strong> Full source code. Includes the CLI. Requires Python 3.11+ and <code>brew install ffmpeg</code>. Update manually with <code>git pull && pip install -e .</code></p>
             <p>The core encoding pipeline, GUI features, and output quality are <strong>identical</strong> in both versions.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary><span class="faq-icon">+</span>Will it run on my older Mac?</summary>
+          <div class="faq-answer">
+            <p>The app needs <strong>macOS 13 (Ventura) or later</strong>. Both Intel and Apple Silicon Macs are supported — the app ships as a universal binary — but the macOS version is a separate requirement from the processor.</p>
+            <p>Check yours under the Apple menu → About This Mac. If it says macOS 12 (Monterey) or older, the app won&rsquo;t launch. Many Macs from 2015 and earlier can&rsquo;t be updated past Monterey, so this is a hardware limit rather than something an update will fix.</p>
+            <p>On those machines the free <a href="#cli-install">command-line version</a> still works. It does conversion, chapters, cover art, and metadata — everything except the graphical interface — and needs Python 3.11+ and ffmpeg.</p>
           </div>
         </details>
 

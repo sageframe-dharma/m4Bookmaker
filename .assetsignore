@@ -1,0 +1,16 @@
+# assets.directory is "." — the whole repo — so everything that is not part
+# of the published site must be excluded here, or wrangler serves it. Without
+# this, /.git/ was publicly fetchable and the site handed out its own history.
+.git
+.git/**
+.gitignore
+.assetsignore
+.DS_Store
+**/.DS_Store
+node_modules
+node_modules/**
+wrangler.jsonc
+package.json
+package-lock.json
+.wrangler
+.wrangler/**

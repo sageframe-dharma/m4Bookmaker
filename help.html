@@ -542,44 +542,63 @@
 
       <div class="subsection">
         <h3>GitHub version (free)</h3>
-        <p>The full source, GPL-3.0-licensed. Includes both the GUI and the CLI. Requires Python 3.11+ and ffmpeg.</p>
+        <p>The same application, GPL-3.0 licensed, installed from PyPI. You supply Python 3.11 or newer and ffmpeg; everything else is handled for you.</p>
+        <div class="callout note">
+          <strong>The <code>m4bmaker</code> command is identical on macOS, Windows, and Linux.</strong> Only the way you install Python and ffmpeg differs. Pick your platform below and run the four steps in order.
+        </div>
 
-        <h4 style="margin:1rem 0 0.4rem;font-size:0.95rem;">Install from PyPI (recommended)</h4>
-        <pre><code># Install (CLI only)
-pip install m4bmaker
+        <h4 style="margin:1.4rem 0 0.4rem;font-size:0.95rem;">macOS</h4>
+        <pre><code># 1 — Python 3.11 or newer (the Python macOS ships is 3.9, too old)
+brew install python
 
-# Or with the GUI
-pip install m4bmaker[gui]
-
-# Verify
-m4bmaker --help</code></pre>
-
-        <h4 style="margin:1rem 0 0.4rem;font-size:0.95rem;">Install from source</h4>
-        <pre><code># Clone the repo
-git clone https://github.com/sageframe-no-kaji/m4bmaker
-cd m4bmaker
-
-# Install
-pip install -e .
-
-# Verify
-m4bmaker --help</code></pre>
-
-        <h4 style="margin:1rem 0 0.4rem;font-size:0.95rem;">Install ffmpeg</h4>
-        <pre><code># macOS
+# 2 — ffmpeg
 brew install ffmpeg
 
-# Ubuntu / Debian
-sudo apt install ffmpeg
+# 3 — m4Bookmaker
+pip3 install "m4bmaker[gui]"
 
-# Windows (winget)
-winget install ffmpeg</code></pre>
+# 4 — check it worked
+m4bmaker --help</code></pre>
         <div class="callout note">
-          <strong>Python note:</strong> m4Bookmaker needs Python 3.11 or newer. The Python that ships with macOS is 3.9, so it won&rsquo;t work for either the GUI or the CLI — install a current version from <a href="https://www.python.org/downloads/" target="_blank">python.org</a> or via <code>brew install python</code>. The GUI also needs Qt, which <code>pip install m4bmaker[gui]</code> installs for you.
+          <strong>Don&rsquo;t have Homebrew?</strong> Install it from <a href="https://brew.sh" target="_blank">brew.sh</a> — one command, about a minute. Or install Python from <a href="https://www.python.org/downloads/" target="_blank">python.org</a> instead and use <a href="https://ffmpeg.org/download.html" target="_blank">a prebuilt ffmpeg</a>.
         </div>
+
+        <h4 style="margin:1.4rem 0 0.4rem;font-size:0.95rem;">Windows</h4>
+        <pre><code># 1 — install Python 3.11 or newer from python.org
+#     Tick "Add python.exe to PATH" in the installer.
+
+# 2 — ffmpeg
+winget install ffmpeg
+
+# 3 — m4Bookmaker
+py -m pip install "m4bmaker[gui]"
+
+# 4 — check it worked
+m4bmaker --help</code></pre>
         <div class="callout note">
-          <strong>Don't have Homebrew?</strong> Install from <a href="https://brew.sh" target="_blank">brew.sh</a> — one command, takes about a minute.
+          <strong>Why <code>py -m pip</code> rather than <code>pip</code>?</strong> Windows often has several Python versions installed, and a bare <code>pip</code> can belong to the wrong one — or not be on your PATH at all. The <code>py</code> launcher always resolves to a real Python and installs into it.
         </div>
+
+        <h4 style="margin:1.4rem 0 0.4rem;font-size:0.95rem;">Linux</h4>
+        <pre><code># 1 — Python 3.11 or newer, pip, and ffmpeg
+sudo apt install python3 python3-pip ffmpeg    # Debian, Ubuntu
+sudo dnf install python3 python3-pip ffmpeg    # Fedora
+sudo pacman -S python python-pip ffmpeg        # Arch
+
+# 2 — m4Bookmaker
+pip install "m4bmaker[gui]"
+
+# 3 — check it worked
+m4bmaker --help</code></pre>
+
+        <h4 style="margin:1.4rem 0 0.4rem;font-size:0.95rem;">After installing</h4>
+        <p>Launch the graphical app with <code>m4bmaker-gui</code>, or use the command line with <code>m4bmaker</code>. For the command line only — no graphical interface, a much smaller install — drop the <code>[gui]</code> and install plain <code>m4bmaker</code> instead.</p>
+        <div class="callout note">
+          <strong>&ldquo;m4bmaker: command not found&rdquo;?</strong> The package installed, but its command isn&rsquo;t on your PATH. Run it through Python instead — <code>python -m m4bmaker --help</code> on macOS and Linux, or <code>py -m m4bmaker --help</code> on Windows. That always works.
+        </div>
+
+        <h4 style="margin:1.4rem 0 0.4rem;font-size:0.95rem;">From source</h4>
+        <p>If you want to read the code, modify it, or contribute, the full source is on <a href="https://github.com/sageframe-no-kaji/m4bmaker" target="_blank">GitHub</a> under GPL-3.0, with development setup documented in <a href="https://github.com/sageframe-no-kaji/m4bmaker/blob/main/CONTRIBUTING.md" target="_blank">CONTRIBUTING.md</a>. For simply using the app, install from PyPI above — it is the same code and considerably less work.</p>
       </div>
     </section>
 
@@ -789,32 +808,27 @@ winget install ffmpeg</code></pre>
     <!-- ─────────────────────────────────────────────────────── -->
     <section class="help-section" id="cli-install">
       <h2>CLI Guide</h2>
-      <p class="section-deck">The command-line interface is scriptable, pipe-friendly, and has no GUI dependency. The CLI is only accessible via the GitHub install — installing from GitHub puts <code>m4bmaker</code> on your PATH.</p>
+      <p class="section-deck">The command-line interface is scriptable, pipe-friendly, and needs no graphical interface at all. It comes with the free PyPI install on macOS, Windows, and Linux; it is not part of the purchased app bundle.</p>
 
       <!-- Installation -->
       <div class="subsection">
         <h3>Installation</h3>
-        <pre><code># Step 1: Install ffmpeg via Homebrew
-brew install ffmpeg
+        <p>The CLI alone — no Qt, a much smaller install than the graphical app. You need Python 3.11 or newer and ffmpeg first; see <a href="#getting-started">Getting Started</a> for how to install those on your platform.</p>
+        <pre><code># macOS and Linux
+pip install m4bmaker
 
-# Step 2: Clone the repo
-git clone https://github.com/sageframe-no-kaji/m4bmaker
-cd m4bmaker
+# Windows
+py -m pip install m4bmaker
 
-# Step 3: Install (editable mode makes future git pulls take effect immediately)
-pip install -e .
-
-# Step 4: Verify
+# check it worked
 m4bmaker --help</code></pre>
 
         <div class="callout note">
-          <strong>Python version:</strong> Requires Python 3.11 or newer. Check with <code>python3 --version</code>. Install a newer version from <a href="https://www.python.org/downloads/" target="_blank">python.org</a> or via <code>brew install python</code>.
+          <strong>Python version:</strong> Requires Python 3.11 or newer. Check with <code>python3 --version</code> (<code>py --version</code> on Windows). Install a current version from <a href="https://www.python.org/downloads/" target="_blank">python.org</a>, or on macOS with <code>brew install python</code>.
         </div>
 
         <h4>Updating</h4>
-        <pre><code>cd /path/to/m4bmaker
-git pull
-pip install -e .</code></pre>
+        <pre><code>pip install --upgrade m4bmaker</code></pre>
       </div>
 
       <!-- Basic Syntax -->
@@ -1031,10 +1045,13 @@ man m4bmaker</code></pre>
         <details class="faq-item">
           <summary><span class="faq-icon">+</span>ffmpeg was not found — how do I install it?</summary>
           <div class="faq-answer">
-            <p>The <strong>direct download version</strong> bundles ffmpeg — no action needed on your part.</p>
-            <p>On the <strong>GitHub (free) version</strong>, install ffmpeg with Homebrew:</p>
-            <p><code>brew install ffmpeg</code></p>
-            <p>No Homebrew? Install it first from <a href="https://brew.sh" target="_blank">brew.sh</a>. After installing ffmpeg, restart your terminal and run <code>ffmpeg -version</code> to confirm it's on your PATH.</p>
+            <p>The <strong>purchased version</strong> bundles ffmpeg — no action needed on your part.</p>
+            <p>On the <strong>free version</strong>, install it for your platform:</p>
+            <p><code>brew install ffmpeg</code> &nbsp;— macOS (no Homebrew? get it from <a href="https://brew.sh" target="_blank">brew.sh</a> first)<br />
+            <code>winget install ffmpeg</code> &nbsp;— Windows<br />
+            <code>sudo apt install ffmpeg</code> &nbsp;— Debian, Ubuntu<br />
+            <code>sudo dnf install ffmpeg</code> &nbsp;— Fedora</p>
+            <p>Afterwards, open a new terminal and run <code>ffmpeg -version</code> to confirm it is on your PATH.</p>
           </div>
         </details>
 
@@ -1087,8 +1104,8 @@ man m4bmaker</code></pre>
         <details class="faq-item">
           <summary><span class="faq-icon">+</span>What's the difference between the direct download and the GitHub version?</summary>
           <div class="faq-answer">
-            <p><strong>Direct download ($9.99):</strong> Fully self-contained — no Python, no Homebrew, no ffmpeg to install. Available for Mac and Windows. The CLI is not accessible from the app bundle — use the GitHub install for scripting.</p>
-            <p><strong>GitHub (free, GPL-3.0):</strong> Full source code. Includes the CLI. Requires Python 3.11+ and <code>brew install ffmpeg</code>. Update manually with <code>git pull && pip install -e .</code></p>
+            <p><strong>Direct download ($9.99):</strong> Fully self-contained — no Python, no Homebrew, no ffmpeg to install. Available for Mac and Windows. The CLI is not accessible from the app bundle — install the free PyPI package alongside it if you want to script.</p>
+            <p><strong>Free version (GPL-3.0):</strong> Installed with <code>pip install m4bmaker</code> on macOS, Windows, or Linux. Includes the CLI. You supply Python 3.11+ and ffmpeg. Update with <code>pip install --upgrade m4bmaker</code>.</p>
             <p>The core encoding pipeline, GUI features, and output quality are <strong>identical</strong> in both versions.</p>
           </div>
         </details>

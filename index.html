@@ -68,6 +68,10 @@
       --dark-muted:  #888888;
       --dark-rule:   #333333;
       --dark-em:     #f5f2ed;
+      /* Body copy on the dark pricing card — brighter than --dark-prose,
+         which is pitched for large-format section decks and reads dim at
+         the card's 0.9rem. */
+      --dark-copy:   #d8d2c8;
     }
 
     /* ── Reset ─────────────────────────────────────────────── */
@@ -557,10 +561,10 @@
       color: var(--dark-text);
     }
     .pricing-card--free h3 { color: var(--dark-em); }
-    .pricing-card--free p  { color: var(--dark-prose); }
+    .pricing-card--free p  { color: var(--dark-copy); }
     .pricing-card--free .price-amount { color: #fff; }
     .pricing-card--free hr { border-color: var(--dark-rule); }
-    .pricing-card--free .pricing-features li { color: var(--dark-prose); }    .pricing-card h3 {
+    .pricing-card--free .pricing-features li { color: var(--dark-copy); }    .pricing-card h3 {
       font-family: 'Lora', Georgia, serif;
       font-size: 1.3rem;
       margin-bottom: 0.5rem;

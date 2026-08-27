@@ -1111,6 +1111,16 @@ man m4bmaker</code></pre>
         </details>
 
         <details class="faq-item">
+          <summary><span class="faq-icon">+</span>Finder says my audiobook is &ldquo;Protected mpeg 4 audiobook&rdquo; &mdash; is it DRM&rsquo;d?</summary>
+          <div class="faq-answer">
+            <p><strong>No.</strong> The file is clean. This is a macOS labelling quirk, not a property of your audiobook.</p>
+            <p>macOS ships a built-in file type called <code>com.apple.protected-mpeg-4-audio</code> that claims the <code>.m4b</code> extension. Unless something on the machine says otherwise, Finder inspects an <code>.m4b</code> and guesses that type &mdash; so it shows this label for M4B files made by <em>any</em> tool, not just this one.</p>
+            <p>m4Bookmaker declares its own file type, so once the app is installed on a Mac, files show correctly as &ldquo;M4B Audiobook&rdquo; there. Send the file to someone who doesn&rsquo;t have the app and their Finder will fall back to the same wrong guess. Nothing written inside the file can change that &mdash; it is how macOS resolves file types.</p>
+            <p>Playback and importing into Apple Books are unaffected. If you want to confirm a file for yourself, a genuinely protected MP4 contains <code>sinf</code>, <code>drms</code>, <code>frma</code> and <code>schm</code> boxes; files from m4Bookmaker contain none of them, and carry the <code>M4B</code> brand rather than <code>M4P</code>.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
           <summary><span class="faq-icon">+</span>Will it run on my older Mac?</summary>
           <div class="faq-answer">
             <p>The app needs <strong>macOS 13 (Ventura) or later</strong>. Both Intel and Apple Silicon Macs are supported — the app ships as a universal binary — but the macOS version is a separate requirement from the processor.</p>

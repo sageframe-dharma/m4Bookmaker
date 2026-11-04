@@ -1,6 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "m4bookmaker",
+  "account_id": "0a54ddbe921f7f6fc54038dfdd3e3be2",
   "compatibility_date": "2025-09-27",
   "observability": {
     "enabled": true
